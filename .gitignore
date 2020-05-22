@@ -1,0 +1,9 @@
+# Ignore git folder
+.git/
+# Ignore pycaches
+__pycache__/
+# Ignore differents python interpretator files
+.spec
+.idea/
+# Ignore virtual environment
+venv/
