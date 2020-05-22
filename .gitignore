@@ -1,5 +1,7 @@
 # Ignore git folder
 .git/
+# Ignore project secrets
+secrets.py
 # Ignore pycaches
 __pycache__/
 # Ignore differents python interpretator files
