@@ -21,30 +21,55 @@
 <header class="header">
     <div class="wrapper">
 
-        <nav class="uk-navbar-container uk-navbar-transparent navigation" uk-navbar>
+        <nav class="uk-navbar-container uk-navbar-transparent navigation" uk-navbar="mode: click" uk-navbar>
 
             <div class="uk-navbar-left">
                 <ul class="uk-navbar-nav">
                     <li class="uk-active">
-                        <a
-                                href="/"><img
-                                class="header_img"
+                        <a href="/">
+                            <img class="header_img"
                                 src="{% static 'img/hammer.png' %}"
                                 width="70"
-                                height="70">
+                                height="70"
+                            >
                         </a>
                     </li>
                     <li><a href="/">Lots</a></li>
                 </ul>
             </div>
-
+            {% if not user.is_authenticated %}
             <div class="uk-navbar-right">
                 <ul class="uk-navbar-nav">
                     <li><a href="#">Sign in</a></li>
                     <li><a href="#">Sign up</a></li>
                 </ul>
             </div>
+            {% else %}
+            <div class="uk-navbar-right">
+                <ul class="uk-navbar-nav">
+                    <li>
+                        <a class= "account_link" href="#">
+                            <div class="nickname_header"> {{ user.username }} </div>
+                            <img
+                                class="user_avatar"
+                                src="{{ user.avatar.latest.image.url }}"
+                            >
+                            <img
+                                class="arrow_down_img"
+                                src="{% static 'img/arrow_down.png' %}"
+                            >
+                        </a>
+                        <div class="uk-navbar-dropdown">
+                            <ul class="uk-nav uk-navbar-dropdown-nav">
+                                <li><a href="#">Account settings</a></li>
+                                <li><a href="#">Logout</a></li>
+                            </ul>
+                        </div>
 
+                    </li>
+                </ul>
+            </div>
+            {% endif %}
         </nav>
     </div>
 </header>

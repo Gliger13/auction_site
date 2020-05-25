@@ -130,6 +130,7 @@ STATICFILES_DIRS = [
     '/var/www/static'
 ]
 
+MEDIA_URL = '/media/'
 MEDIA_ROOT = 'media'
 
 EMAIL_BACKEND = ''
