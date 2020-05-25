@@ -9,3 +9,5 @@ __pycache__/
 .idea/
 # Ignore virtual environment
 venv/
+# Ignore user images
+auction/media
