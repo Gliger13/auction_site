@@ -1,0 +1,57 @@
+.header{
+    background: #150C30;
+    color: rgb(250, 250, 250)
+}
+
+body{
+    background-color: rgb(230, 230, 230);
+    margin: 0px;
+    font-family: Arial;
+    display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.wrapper{
+    max-width: 1040px;
+    margin: 0 auto;
+
+}
+
+.content{
+flex: 1 0 auto;
+}
+
+.main-text{
+    text-align: justify;
+}
+
+.footer{
+    background: rgb(40, 40, 40);
+    flex: 0 0 auto;
+}
+
+.uk-table{
+    max-width: 800px;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.footer_row{
+    width: 50%;
+}
+
+.footer_body_link:link, .footer_body_link:visited, .footer_body_link:active{
+    color: rgb(150, 150, 150);
+    text-decoration: none;
+}
+
+.footer_head_text{
+    color: rgb(230, 230, 230);
+}
+
+.footer_body_link:hover {
+    color: rgb(230, 230, 230);
+}
+
+
