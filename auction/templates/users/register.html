@@ -1,0 +1,39 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% block head %}
+<link
+        rel="stylesheet"
+        href="{% static 'css/users/register.css' %}"
+        type="text/css"
+>
+{% endblock %}
+{% block title %}
+    Register
+{% endblock %}
+
+{% block app %}
+<div class="register_card">
+    <div class="uk-card uk-card-default uk-card-large uk-card-body uk-width-1-1@m">
+        <div class="card_form">
+            <form method="post" action="/accounts/register/">
+                <fieldset class="uk-fieldset">
+                    {% csrf_token %}
+                    <legend class="uk-legend">Registration</legend>
+
+                    {% for field in form %}
+                    <div class="field_wrapper">
+                        {{ field.label_tag }}  {{ field }}
+                        {{ field.errors }}
+                    </div>
+                    {% endfor %}
+                    {{ form.non_field_errors }}
+
+                    <div class="register_button">
+                        <button type="submit" class="uk-button uk-button-default uk-button-small uk-width-1-1">Send</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

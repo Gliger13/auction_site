@@ -43,7 +43,7 @@ body {
 }
 
 .content{
-flex: 1 0 auto;
+    flex: 1 0 auto;
 }
 
 .main-text{
@@ -63,19 +63,33 @@ flex: 1 0 auto;
 
 .footer_row{
     width: 50%;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.footer_content{
+    max-width: 50%;
+    max-height: 50%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .footer_body_link:link, .footer_body_link:visited, .footer_body_link:active{
     color: rgb(150, 150, 150);
     text-decoration: none;
+    padding: 2px;
 }
 
 .footer_head_text{
     color: rgb(230, 230, 230);
+    padding: 2px;
 }
 
 .footer_body_link:hover {
     color: rgb(230, 230, 230);
 }
+
+
+
 
 

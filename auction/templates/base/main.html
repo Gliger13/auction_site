@@ -3,17 +3,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Auction</title>
+    <title>
+        {% block title %}
+        Auction
+        {% endblock %}
+    </title>
     <link
             rel="icon"
-            href="{% static 'img/favicon.ico' %}"
+            href="{% static 'images/base/favicon.ico' %}"
             type="images/x-icon"
     >
     <link
             rel="stylesheet"
-            href="{% static 'css/styles.css' %}"
+            href="{% static 'css/base/styles.css' %}"
             type="text/css"
     >
+    {% block head %}
+    {% endblock %}
     <!-- UIkit CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.4.6/dist/css/uikit.min.css" />
 </head>
@@ -28,7 +34,7 @@
                     <li class="uk-active">
                         <a href="/">
                             <img class="header_img"
-                                src="{% static 'img/hammer.png' %}"
+                                src="{% static 'images/base/hammer.png' %}"
                                 width="70"
                                 height="70"
                             >
@@ -40,7 +46,7 @@
             {% if not user.is_authenticated %}
             <div class="uk-navbar-right">
                 <ul class="uk-navbar-nav">
-                    <li><a href="#">Sign in</a></li>
+                    <li><a href="/accounts/register">Sign in</a></li>
                     <li><a href="#">Sign up</a></li>
                 </ul>
             </div>
@@ -56,13 +62,13 @@
                             >
                             <img
                                 class="arrow_down_img"
-                                src="{% static 'img/arrow_down.png' %}"
+                                src="{% static 'images/base/arrow_down.png' %}"
                             >
                         </a>
                         <div class="uk-navbar-dropdown">
                             <ul class="uk-nav uk-navbar-dropdown-nav">
                                 <li><a href="#">Account settings</a></li>
-                                <li><a href="#">Logout</a></li>
+                                <li><a href="logout/">Logout</a></li>
                             </ul>
                         </div>
 
@@ -77,10 +83,12 @@
     <div class="wrapper">
         <img
                 class="header_img"
-                src="{% static 'img/title_img.jpeg' %}"
+                src="{% static 'images/base/title_img.jpeg' %}"
                 width="100%"
         >
+        {% block app %}
         <div class="uk-card uk-card-default uk-card-large uk-card-body uk-width-1-1@m">
+            {% block content %}
             <h3 class="uk-card-title">Auction</h3>
             <p class="main-text">
             An auction is usually a process of buying and selling goods or services by offering them up for bid, taking bids, and then selling the item to the highest bidder or buying the item from the lowest bidder. Some exceptions to this definition exist and are described in the section about different types. The branch of economic theory dealing with auction types and participants' behavior in auctions is called auction theory.
@@ -88,30 +96,34 @@
             The open ascending price auction is arguably the most common form of auction in use throughout history. Participants bid openly against one another, with each subsequent bid required to be higher than the previous bid. An auctioneer may announce prices, bidders may call out their bids themselves or have a proxy call out a bid on their behalf, or bids may be submitted electronically with the highest current bid publicly displayed.
 
             Auctions were and are applied for trade in diverse contexts. These contexts are antiques, paintings, rare collectibles, expensive wines, commodities, livestock, radio spectrum, used cars, even emission trading and many more.
-        </p>
+            </p>
+            {% endblock %}
         </div>
+        {% endblock %}
     </div>
 </div>
 <div class="footer">
     <div class="wrapper">
-        <table class="uk-table uk-table-center">
-            <thead class="footer_head">
-                <tr>
-                    <th class="footer_row">
-                        <div class="footer_head_text">Help</div>
-                    </th>
-                    <th class="footer_row">
-                        <div class="footer_head_text">Contacts</div>
-                    </th>
-                </tr>
-            </thead>
-            <tbody class="footer_body">
-                <tr>
-                    <td><a class="footer_body_link" href="">FAQ</a></td>
-                    <td><a class="footer_body_link" href="">Author</a></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="footer_content">
+            <table class="uk-table uk-table-center">
+                <thead class="footer_head">
+                    <tr>
+                        <th class="footer_row">
+                            <div class="footer_head_text">Help</div>
+                        </th>
+                        <th class="footer_row">
+                            <div class="footer_head_text">Contacts</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="footer_body">
+                    <tr>
+                        <td class="footer_row"><a class="footer_body_link" href="">FAQ</a></td>
+                        <td class="footer_row"><a class="footer_body_link" href="">Author</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 

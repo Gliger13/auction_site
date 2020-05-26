@@ -1,0 +1,46 @@
+.register_wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.register_card{
+    max-width: 35%;
+    margin: 10px auto;
+}
+
+.card_form{
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+}
+
+.register_button{
+    max-width: 90%;
+    margin-top: 10%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.field_wrapper{
+    margin-top: 13px;
+    margin-bottom: 13px;
+}
+
+.errorlist{
+    color: red;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8em;
+    text-align: ustify;
+}
+
+.error input, .error select{
+    color: red;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-size: 4px;
+    text-align: ustify;
+}
