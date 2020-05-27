@@ -1,13 +1,18 @@
-# Ignore git folder
-.git/
-# Ignore project secrets
-secrets.py
-# Ignore pycaches
+# Byte-compiled
 __pycache__/
-# Ignore differents python interpretator files
+
+# Git files
+.git/
+
+# Distribution / packaging / PyInstaller
 .spec
 .idea/
-# Ignore virtual environment
+
+# Virtual environment
 venv/
-# Ignore user images
+
+# Project secrets
+secrets.py
+
+# User media
 auction/media
