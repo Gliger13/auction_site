@@ -132,8 +132,10 @@ STATICFILES_DIRS = [
 ]
 
 MEDIA_URL = '/media/'
+
 MEDIA_ROOT = 'media'
 
-EMAIL_BACKEND = ''
 # As mail for verification
 ADMIN_EMAIL = 'admin@admin.com'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

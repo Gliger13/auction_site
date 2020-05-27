@@ -1,7 +1,7 @@
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import NON_FIELD_ERRORS
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect
 
 from users.forms import RegistrationForm, LoginForm
@@ -16,7 +16,7 @@ def register(request):
         if form.is_valid():
             form.save()
             user = form.get_user(request)
-            print(user)
+            user.send_verification_email()
             if user:
                 login(request, user)
                 return render(request, 'users/register_success.html')
@@ -24,6 +24,16 @@ def register(request):
                 return render(request, 'users/register.html', context={"form": form})
         else:
             return render(request, 'users/register.html', context={"form": form})
+
+
+def verify(request):
+    user = request.user
+    data = request.GET
+    if user.is_token_correct(data['token']):
+        user.verify_email()
+        return render(request, 'users/email_verified.html')
+    else:
+        return Http404("Not Found")
 
 
 def login_user(request):
