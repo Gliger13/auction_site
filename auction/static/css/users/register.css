@@ -44,3 +44,10 @@
     font-size: 4px;
     text-align: ustify;
 }
+
+.input-form {
+    padding: 0;
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 90%;
+}

@@ -1,0 +1,15 @@
+{% extends 'users/register.html' %}
+{% load static %}
+{% block head %}
+    <link
+            rel="stylesheet"
+            href="{% static 'css/users/register_success.css' %}"
+            type="text/css"
+    >
+{% endblock %}
+{% block content %}
+<h4>Congratulations on registering. Now you can set lots</h4>
+<div class="card-img">
+    <img src="{% static 'images/users/bow_down.png' %}">
+</div>
+{% endblock %}

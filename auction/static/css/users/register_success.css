@@ -1,4 +1,15 @@
-.card{
+h4 {
+    text-align: center;
+    font-style: Tahoma;
+}
+
+.register_card{
     max-width: 35%;
     margin: 10px auto;
+}
+
+.card-img {
+    margin: 10%;
+    width: 90%;
+    heigth: 90%;
 }

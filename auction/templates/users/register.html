@@ -14,12 +14,14 @@
 {% block app %}
 <div class="register_card">
     <div class="uk-card uk-card-default uk-card-large uk-card-body uk-width-1-1@m">
+        {% block content %}
         <div class="card_form">
             <form method="post" action="/accounts/register/">
                 <fieldset class="uk-fieldset">
                     {% csrf_token %}
-                    <legend class="uk-legend">Registration</legend>
-
+                    {% block legend %}
+                        <legend class="uk-legend">Registration</legend>
+                    {% endblock %}
                     {% for field in form %}
                     <div class="field_wrapper">
                         {{ field.label_tag }}  {{ field }}
@@ -34,6 +36,7 @@
                 </fieldset>
             </form>
         </div>
+        {% endblock %}
     </div>
 </div>
 {% endblock %}

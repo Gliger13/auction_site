@@ -47,7 +47,7 @@
             <div class="uk-navbar-right">
                 <ul class="uk-navbar-nav">
                     <li><a href="/accounts/register">Sign in</a></li>
-                    <li><a href="#">Sign up</a></li>
+                    <li><a href="/accounts/login">Sign up</a></li>
                 </ul>
             </div>
             {% else %}
@@ -56,10 +56,17 @@
                     <li>
                         <a class= "account_link" href="#">
                             <div class="nickname_header"> {{ user.username }} </div>
+                            {% if user.avatar.latest.image.url %}
                             <img
                                 class="user_avatar"
                                 src="{{ user.avatar.latest.image.url }}"
                             >
+                            {% else %}
+                            <img
+                                class="user_avatar"
+                                src="{% static 'images/users/base_icon.png' %}"
+                            >
+                            {% endif %}
                             <img
                                 class="arrow_down_img"
                                 src="{% static 'images/base/arrow_down.png' %}"
@@ -68,7 +75,7 @@
                         <div class="uk-navbar-dropdown">
                             <ul class="uk-nav uk-navbar-dropdown-nav">
                                 <li><a href="#">Account settings</a></li>
-                                <li><a href="logout/">Logout</a></li>
+                                <li><a href="/accounts/logout">Logout</a></li>
                             </ul>
                         </div>
 
