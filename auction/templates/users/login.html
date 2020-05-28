@@ -1,17 +1,18 @@
-{% extends 'users/register.html' %}
+{% extends 'users/base.html' %}
 {% load static %}
-{% block head %}
-    <link
-            rel="stylesheet"
-            href="{% static 'css/users/register.css' %}"
-            type="text/css"
-    >
-{% endblock %}
 
 {% block title %}
     Login
 {% endblock %}
 
-{% block legend %}
-    <legend class="uk-legend">Login</legend>
+{% block form %}
+    <form method="post" action="/accounts/login/">
+        {% block legend %}
+            <legend class="uk-legend">Login</legend>
+        {% endblock %}
+        {% block content %}
+            {{ block.super }}
+        {% endblock %}
+    </form>
 {% endblock %}
+

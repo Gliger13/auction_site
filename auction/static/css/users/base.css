@@ -1,18 +1,29 @@
-.register_wrapper {
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.register_card{
+.card {
     max-width: 35%;
-    margin: 10px auto;
+    margin: 20px auto;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-left: 3%;
+    padding-right: 3%;
+    background: white;
 }
 
-.card_form{
+.card_form {
     max-width: 90%;
     margin-left: auto;
     margin-right: auto;
     padding: 0;
+}
+
+h4 {
+    text-align: center;
+    font-style: Tahoma;
+}
+
+.card-img {
+    margin: 10%;
+    width: 90%;
+    heigth: 90%;
 }
 
 .register_button{

@@ -1,0 +1,45 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% block head %}
+<link
+        rel="stylesheet"
+        href="{% static 'css/users/base.css' %}"
+        type="text/css"
+>
+{% endblock %}
+{% block title %}
+    Account
+{% endblock %}
+
+{% block app %}
+<div class="card">
+    <div class="card_form">
+        {% block form %}
+        <form method="post" action="/accounts/">
+            <fieldset class="uk-fieldset">
+                {% block legend %}
+                    <legend class="uk-legend">Form</legend>
+                {% endblock %}
+
+                {% block content %}
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="field_wrapper">
+                    {{ field.label_tag }}  {{ field }}
+                    {{ field.errors }}
+                </div>
+                {% endfor %}
+
+                {{ form.non_field_errors }}
+
+                <div class="register_button">
+                    <button type="submit" class="uk-button uk-button-default uk-button-small uk-width-1-1">Send</button>
+                </div>
+
+                {% endblock %}
+            </fieldset>
+        </form>
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}
