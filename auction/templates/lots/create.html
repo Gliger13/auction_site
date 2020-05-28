@@ -1,0 +1,14 @@
+{% extends 'users/register.html' %}
+{% load static %}
+
+{% block title %}
+    Create
+{% endblock %}
+
+{% block form %}
+<form method="post" action="/lots/create/">
+    {% block content %}
+    {{ block.super }}
+    {% endblock%}
+</form>
+{% endblock %}
