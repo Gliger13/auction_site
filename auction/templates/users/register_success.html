@@ -1,17 +1,15 @@
-{% extends 'users/register.html' %}
+{% extends 'users/base.html' %}
 {% load static %}
-{% block head %}
-    <link
-            rel="stylesheet"
-            href="{% static 'css/users/register_success.css' %}"
-            type="text/css"
-    >
+
+{% block title %}
+    Success!
 {% endblock %}
-{% block content %}
-{% block some-text %}
-<h4>Congratulations on registering. Now you can set lots</h4>
-{% endblock %}
-<div class="card-img">
-    <img src="{% static 'images/users/bow_down.png' %}">
-</div>
+
+{% block form %}
+    <h4>
+        Congratulations on registering. Now you can set lots
+    </h4>
+    <div class="card-img">
+        <img src="{% static 'images/users/bow_down.png' %}">
+    </div>
 {% endblock %}

@@ -1,4 +1,4 @@
-{% extends 'users/register.html' %}
+{% extends 'users/base.html' %}
 {% load static %}
 
 {% block title %}
@@ -6,13 +6,13 @@
 {% endblock %}
 
 {% block form %}
-<form method="post" action="/accounts/login/">
-    {% block content %}
-    {{ block.super }}
-    {% endblock%}
-</form>
+    <form method="post" action="/accounts/login/">
+        {% block legend %}
+            <legend class="uk-legend">Login</legend>
+        {% endblock %}
+        {% block content %}
+            {{ block.super }}
+        {% endblock %}
+    </form>
 {% endblock %}
 
-{% block legend %}
-    <legend class="uk-legend">Login</legend>
-{% endblock %}
