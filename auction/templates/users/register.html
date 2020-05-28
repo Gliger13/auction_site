@@ -14,9 +14,12 @@
 {% block app %}
 <div class="register_card">
     <div class="uk-card uk-card-default uk-card-large uk-card-body uk-width-1-1@m">
-        {% block content %}
         <div class="card_form">
-            <form method="post" action="/accounts/register/">
+            {% block form %}
+
+            <form method="post" action="/accounts/register">
+                {% block content %}
+
                 <fieldset class="uk-fieldset">
                     {% csrf_token %}
                     {% block legend %}
@@ -34,9 +37,12 @@
                         <button type="submit" class="uk-button uk-button-default uk-button-small uk-width-1-1">Send</button>
                     </div>
                 </fieldset>
+
+                {% endblock %}
             </form>
+
+            {% endblock %}
         </div>
-        {% endblock %}
     </div>
 </div>
 {% endblock %}

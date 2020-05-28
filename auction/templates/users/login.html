@@ -1,15 +1,16 @@
 {% extends 'users/register.html' %}
 {% load static %}
-{% block head %}
-    <link
-            rel="stylesheet"
-            href="{% static 'css/users/register.css' %}"
-            type="text/css"
-    >
-{% endblock %}
 
 {% block title %}
     Login
+{% endblock %}
+
+{% block form %}
+<form method="post" action="/accounts/login/">
+    {% block content %}
+    {{ block.super }}
+    {% endblock%}
+</form>
 {% endblock %}
 
 {% block legend %}
