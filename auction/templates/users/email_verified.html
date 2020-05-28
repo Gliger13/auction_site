@@ -1,6 +1,15 @@
-{% extends 'users/register_success.html' %}
+{% extends 'users/base.html' %}
 {% load static %}
 
-{% block some-text %}
-<h4>Congratulations on verified email. You have more actions!</h4>
+{% block title %}
+    Success!
+{% endblock %}
+
+{% block form %}
+    <h4>
+        Congratulations on verified email. You have more actions!
+    </h4>
+    <div class="card-img">
+        <img src="{% static 'images/users/bow_down.png' %}">
+    </div>
 {% endblock %}
