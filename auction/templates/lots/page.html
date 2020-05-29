@@ -1,0 +1,61 @@
+{% extends 'base/main.html' %}
+{% load static %}
+
+{% block head %}
+<link
+        rel="stylesheet"
+        href="{% static 'css/lots/page.css' %}"
+        type="text/css"
+>
+{% endblock %}
+
+{% block title %}
+    Page
+{% endblock %}
+
+{% block app %}
+
+<div class="page">
+    <div class="lots_title lot_wrapper">
+        Available lots:
+    </div>
+    {% for lot in lots %}
+    <div class="lot_wrapper">
+        <div class="uk-card uk-card-default uk-width-1-1@m">
+            <div class="lot_card">
+                <div class="uk-card-header">
+                    <div class="uk-grid-small uk-flex-middle" uk-grid>
+                        <div class="uk-width-expand">
+                            <h1 class="uk-card-title uk-margin-remove-bottom">{{ lot.heading }}</h1>
+                            <p class="uk-text-meta uk-margin-remove-top">
+                                <time>
+                                    {{ lot.created_at }}
+                                </time>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-card-body">
+                    <div class="uk-column-1-2">
+                    {% if lot.image %}
+                    <img class="lot_image" src="{{ lot.image.url }}">
+                    {% else %}
+                    <img class="lot_image" src="{% static 'images/lots/base_lot.png' %}">
+                    {% endif %}
+                    <p class="price">
+                        Start price: {{ lot.base_price }}
+                    </p>
+                    <p class="price">
+                        Last bit: {{ lot.current_price }}
+                    </p>
+                    </div>
+                </div>
+                <div class="uk-card-footer">
+                    <a href="#" class="uk-button uk-button-text">Read more</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

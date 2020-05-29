@@ -28,7 +28,7 @@
 }
 
 body {
-    background-color: rgb(230, 230, 230);
+    background-color: rgb(200, 200, 200);
     margin: 0px;
     font-family: Arial;
     display: flex;
@@ -51,7 +51,7 @@ body {
 }
 
 .footer{
-    background: rgb(40, 40, 40);
+    background: #282828;
     flex: 0 0 auto;
 }
 

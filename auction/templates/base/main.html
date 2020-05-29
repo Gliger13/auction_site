@@ -40,7 +40,7 @@
                             >
                         </a>
                     </li>
-                    <li><a href="/">Lots</a></li>
+                    <li><a href="/lots/page">Lots</a></li>
                     {% if user.is_authenticated %}
                         <li><a href="/lots/create">Create lot</a></li>
                     {% endif %}
@@ -61,12 +61,12 @@
                             <div class="nickname_header"> {{ user.username }} </div>
                             {% if user.avatar.latest.image.url %}
                             <img
-                                class="user_avatar"
+                                class="user_avatar uk-border-circle"
                                 src="{{ user.avatar.latest.image.url }}"
                             >
                             {% else %}
                             <img
-                                class="user_avatar"
+                                class="user_avatar uk-border-circle"
                                 src="{% static 'images/users/base_icon.png' %}"
                             >
                             {% endif %}
@@ -91,12 +91,13 @@
 </header>
 <div class="content">
     <div class="wrapper">
+        {% block app %}
         <img
                 class="header_img"
                 src="{% static 'images/base/title_img.jpeg' %}"
                 width="100%"
         >
-        {% block app %}
+        {% block app_img %}
         <div class="uk-card uk-card-default uk-card-large uk-card-body uk-width-1-1@m">
             {% block content %}
             <h3 class="uk-card-title">Auction</h3>
@@ -109,6 +110,7 @@
             </p>
             {% endblock %}
         </div>
+        {% endblock %}
         {% endblock %}
     </div>
 </div>

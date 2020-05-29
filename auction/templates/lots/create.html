@@ -1,4 +1,4 @@
-{% extends 'users/register.html' %}
+{% extends 'users/base.html' %}
 {% load static %}
 
 {% block title %}
@@ -6,9 +6,22 @@
 {% endblock %}
 
 {% block form %}
-<form method="post" action="/lots/create/">
-    {% block content %}
+<form class="uk-form" method="post" action="/lots/create/" enctype="multipart/form-data">
+    {% block legend %}
+    <legend class="uk-legend">Create lot</legend>
+    {% endblock %}
+    {% block content_form %}
     {{ block.super }}
-    {% endblock%}
+    {% endblock %}
+    <label>Expired at:</label>
+    <input
+            type="datetime-local"
+            name="expires_at"
+            class="input-form"
+    >
+    {% block submit %}
+    {{ block.super }}
+    {% endblock %}
+
 </form>
 {% endblock %}
