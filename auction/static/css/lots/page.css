@@ -41,3 +41,10 @@
     font-size: 110%;
     color: rgb(25, 25, 25)
 }
+
+.no_lots_image {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}

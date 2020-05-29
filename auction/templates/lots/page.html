@@ -16,11 +16,26 @@
 {% block app %}
 
 <div class="page">
-    <div class="lots_title lot_wrapper">
-        Available lots:
-    </div>
-    {% for lot in lots %}
     <div class="lot_wrapper">
+
+        {% if not lots %}
+
+        <div class="lots_title">
+            Now there are no lots:
+        </div>
+        <div class="uk-card uk-card-default uk-width-1-1@m">
+            <img class="no_lots_image" src="{% static 'images/lots/no_lots.png' %}">
+        </div>
+
+        {% else %}
+
+        <div class="lots_title lot_wrapper">
+            Available lots:
+        </div>
+
+        {% endif %}
+
+        {% for lot in lots %}
         <div class="uk-card uk-card-default uk-width-1-1@m">
             <div class="lot_card">
                 <div class="uk-card-header">
