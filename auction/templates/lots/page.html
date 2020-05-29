@@ -16,27 +16,26 @@
 {% block app %}
 
 <div class="page">
-    <div class="lot_wrapper">
+    {% if not lots %}
 
-        {% if not lots %}
+    <div class="lots_title">
+        Now there are no lots:
+    </div>
+    <div class="uk-card uk-card-default uk-width-1-1@m">
+        <img class="no_lots_image" src="{% static 'images/lots/no_lots.png' %}">
+    </div>
 
-        <div class="lots_title">
-            Now there are no lots:
-        </div>
-        <div class="uk-card uk-card-default uk-width-1-1@m">
-            <img class="no_lots_image" src="{% static 'images/lots/no_lots.png' %}">
-        </div>
+    {% else %}
 
-        {% else %}
+    <div class="lots_title lot_wrapper">
+        Available lots:
+    </div>
 
-        <div class="lots_title lot_wrapper">
-            Available lots:
-        </div>
+    {% endif %}
 
-        {% endif %}
-
-        {% for lot in lots %}
-        <div class="uk-card uk-card-default uk-width-1-1@m">
+    {% for lot in lots %}
+     <div class="lot_wrapper">
+         <div class="uk-card uk-card-default uk-width-1-1@m">
             <div class="lot_card">
                 <div class="uk-card-header">
                     <div class="uk-grid-small uk-flex-middle" uk-grid>
@@ -72,5 +71,45 @@
         </div>
     </div>
     {% endfor %}
+    <div class="lot_wrapper">
+        <div class="uk-card-header lot_card">
+            <ul class="uk-pagination" uk-margin>
+                {% if lots.has_previous %}
+
+                    <li><a href="/lots/page/{{ lots.previous_page_number }}"><span uk-pagination-previous></span></a></li>
+                    <li><a href="/lots/page/1">1</a></li>
+                    <li class="uk-disabled"><span>...</span></li>
+                    <li>
+                        <a href="/lots/page/{{ lots.previous_page_number }}">
+                            {{ lots.previous_page_number }}
+                        </a>
+                    </li>
+
+                {% endif %}
+                    <li class="uk-active"><span>{{ lots.number }}</span></li>
+                {% if lots.has_next %}
+
+                    <li>
+                        <a href="/lots/page/{{ lots.next_page_number }}">
+                            {{ lots.next_page_number }}
+                        </a>
+                    </li>
+                    <li class="uk-disabled"><span>...</span></li>
+                    <li>
+                        <a href="/lots/page/{{ lots.next_page_number }}">
+                            {{ lots.paginator.num_pages }}
+                        </a>
+                    </li>
+                    <li><a href="/lots/page/{{ lots.next_page_number }}"><span uk-pagination-next></span></a></li>
+
+                {% endif %}
+            </ul>
+        </div>
+    </div>
 </div>
+
+
+
+
+
 {% endblock %}

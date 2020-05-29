@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 
 from lots.forms import LotsForm
@@ -26,17 +27,22 @@ def create(request):
                 context={'form': form}
             )
 
-def page(request):
-    user = request.user
-    lots = Lot.objects.all()
-    for lot in lots:
-        a = lot.image
 
+def page(request, num):
     if request.method == 'GET':
+        lots_list = Lot.objects.all()
+
+        paginator = Paginator(lots_list, 5)
+
+
+
+        page_number = num
+        page_obj = paginator.get_page(page_number)
+        print(page_obj)
         return render(
             request,
             'lots/page.html',
             context={
-                'lots': lots
+                'lots': page_obj
             }
         )
