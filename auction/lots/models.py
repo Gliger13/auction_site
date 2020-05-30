@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
+from users.models import User
+
 
 class Lot(models.Model):
     heading = models.CharField(max_length=256)
@@ -10,7 +12,7 @@ class Lot(models.Model):
     current_price = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField(null=True)
-    # user = models.ForeignKey(get_user_model(), related_name='lots', on_delete=models.CASCADE)
+    author = models.ForeignKey(get_user_model(), related_name='lots', on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['-created_at', 'base_price']
@@ -18,5 +20,7 @@ class Lot(models.Model):
 
 class Bet(models.Model):
     lot = models.ForeignKey(Lot, related_name='bets', on_delete=models.CASCADE)
+    set_by = models.ForeignKey(get_user_model(), related_name='set_by_user', on_delete=models.CASCADE)
     set_price = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
+
