@@ -34,8 +34,6 @@ def page(request, num):
 
         paginator = Paginator(lots_list, 5)
 
-
-
         page_number = num
         page_obj = paginator.get_page(page_number)
         print(page_obj)
@@ -44,5 +42,17 @@ def page(request, num):
             'lots/page.html',
             context={
                 'lots': page_obj
+            }
+        )
+
+
+def lot(request, lot_id):
+    if request.method == 'GET':
+        lot = Lot.objects.filter(id=lot_id).get()
+        return render(
+            request,
+            'lots/lot.html',
+            context={
+                'lot': lot
             }
         )

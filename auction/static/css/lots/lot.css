@@ -1,0 +1,25 @@
+.lot_card {
+    margin 100px;
+    padding 100px;
+
+}
+
+.lot_image {
+    width: auto;
+}
+
+.toggled_form {
+    background-color: #c8c8c1;
+}
+
+.price {
+    font-size: 1.5em;
+}
+
+.show_button {
+    max-width: 80%;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1em;
+}
