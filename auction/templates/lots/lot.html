@@ -44,35 +44,34 @@
                 <div class="price">
                     Current price: {{ lot.current_price }}
                 </div>
-            </article>
-                <div class="show_button">
-                    <button
-                            class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom"
-                            type="button" uk-toggle="target: #toggle-usage"
-                    >
-                        Set bit
-                    </button>
-                    <div id="toggle-usage">
-                        <div class="toggled_form">
-                            <form class="uk-form" method="post" action="/lots/lot/{{ lot.id }}">
-                                {% csrf_token %}
-                                {{ field.label_tag }} <br>
-                                {{ field }} <br>
-                                {{ field.errors }} <br>
-                                {{ form.non_field_errors }} <br>
-                                <div class="register_button">
-                                    <button
-                                            type="submit"
-                                            class="uk-button uk-button-secondary uk-button-small uk-width-1-1"
-                                    >
-                                        set
-                                    </button>
-                                </div>
-                            </form>
+                <form class="uk-form" method="post" action="/lots/lot/{{ lot.id }}">
+                    <div class="uk-column-1-4">
+                        {% csrf_token %}
+                        {% for field in form %}
+                        {{ field }}
+                        {% endfor %}
+                        <div class="register_button">
+                            <button
+                                    type="submit"
+                                    class="uk-button uk-button-secondary uk-button-default uk-width-1-1"
+                            >
+                                set bet
+                            </button>
                         </div>
                     </div>
-                </div>
-            </div>
+                    <div class="error">
+                        <p> {{ form.non_field_errors }} </p>
+                        <p> {{ field.errors }} </p>
+                        {% if not form.is_correct %}
+                        <p>Wrong price</p>
+                    </div>
+                        {% else %}
+                        <div class="correct">
+                            <p>Bet set</p>
+                        </div>
+                        {% endif %}
+                </form>
+            </article>
         </div>
     </div>
 </div>
