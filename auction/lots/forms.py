@@ -7,7 +7,7 @@ class LotsForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(LotsForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
-            visible.field.widget.attrs['class'] = 'input-form'
+            visible.field.widget.attrs['class'] = 'uk-input input-form'
 
     text_description = forms.CharField(
         required=False,

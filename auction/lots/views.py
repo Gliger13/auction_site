@@ -1,7 +1,7 @@
-from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
+from django.utils import timezone
 
 from lots.forms import LotsForm, SetBitForm
 from lots.models import Lot, Bet
@@ -52,6 +52,8 @@ def page(request, num):
 
 def lot(request, lot_id):
     lot = Lot.objects.filter(id=lot_id).get()
+    expires_at_str = str(lot.expires_at).replace(' ', 'T')
+    is_POST_request = False
     if request.method == 'GET':
         form = SetBitForm()
         return render(
@@ -59,17 +61,22 @@ def lot(request, lot_id):
             'lots/lot.html',
             context={
                 'lot': lot,
+                'expires_at_str': expires_at_str,
+                'is_POST_request': is_POST_request,
                 'form': form
             }
         )
     elif request.method == 'POST':
+        is_POST_request = True
         if request.user:
             bet = Bet()
             bet.lot = lot
             bet.set_by = request.user
-
             form = SetBitForm(request.POST, instance=bet)
-            if form.is_valid() and form.clean_lot(lot):
+
+            if (form.is_valid() and
+                    form.clean_lot(lot)
+                    and lot.expires_at > timezone.now()):
                 form.is_correct = True
                 form.save()
                 return render(
@@ -77,6 +84,8 @@ def lot(request, lot_id):
                     'lots/lot.html',
                     context={
                         'lot': lot,
+                        'expires_at_str': expires_at_str,
+                        'is_POST_request': is_POST_request,
                         'form': form
                     }
                 )
@@ -87,7 +96,9 @@ def lot(request, lot_id):
                     'lots/lot.html',
                     context={
                         'lot': lot,
-                        'form': form
+                        'form': form,
+                        'expires_at_str': expires_at_str,
+                        'is_POST_request': is_POST_request,
                     })
         else:
             return redirect('account/login')

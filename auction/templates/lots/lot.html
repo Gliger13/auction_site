@@ -44,6 +44,32 @@
                 <div class="price">
                     Current price: {{ lot.current_price }}
                 </div>
+
+                <dib class="oneline">
+                    <div class="uk-column-1-4">
+                        <div class="price">
+                            Time left:
+                        </div>
+                        <div class="uk-grid-small uk-child-width-auto uk-margin time_left" uk-grid uk-countdown="date: {{ expires_at_str }}">
+                            <div>
+                                <div class="uk-countdown-number uk-countdown-days time_left"></div>
+                            </div>
+                            <div>
+                                <div class="uk-countdown-number uk-countdown-hours time_left"></div>
+                            </div>
+                            <div>
+                                <div class="uk-countdown-number uk-countdown-minutes time_left"></div>
+                            </div>
+                            <div>
+                                <div class="uk-countdown-number uk-countdown-seconds time_left"></div>
+                            </div>
+                        </div>
+                    </dib>
+                </div>
+
+
+
+
                 <form class="uk-form" method="post" action="/lots/lot/{{ lot.id }}">
                     <div class="uk-column-1-4">
                         {% csrf_token %}
@@ -59,17 +85,19 @@
                             </button>
                         </div>
                     </div>
+                    {% if is_POST_request %}
                     <div class="error">
                         <p> {{ form.non_field_errors }} </p>
                         <p> {{ field.errors }} </p>
                         {% if not form.is_correct %}
-                        <p>Wrong price</p>
+                        <p>Failed to set price</p>
                     </div>
                         {% else %}
                         <div class="correct">
                             <p>Bet set</p>
                         </div>
                         {% endif %}
+                    {% endif %}
                 </form>
             </article>
         </div>

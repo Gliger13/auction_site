@@ -1,7 +1,8 @@
+from datetime import timedelta
+
 from django.contrib.auth import get_user_model
 from django.db import models
-
-from users.models import User
+from django.utils import timezone
 
 
 class Lot(models.Model):
@@ -11,7 +12,7 @@ class Lot(models.Model):
     base_price = models.IntegerField(default=0)
     current_price = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
-    expires_at = models.DateTimeField(null=True)
+    expires_at = models.DateTimeField(default=timezone.now().replace(microsecond=0) + timedelta(days=3))
     author = models.ForeignKey(get_user_model(), related_name='lots', on_delete=models.CASCADE)
 
     class Meta:
