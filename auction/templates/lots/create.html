@@ -7,17 +7,19 @@
 
 {% block form %}
 <form class="uk-form" method="post" action="/lots/create/" enctype="multipart/form-data">
+
     {% block legend %}
     <legend class="uk-legend">Create lot</legend>
     {% endblock %}
     {% block content_form %}
     {{ block.super }}
     {% endblock %}
-    <label>Expired at:</label>
+    <label>Expires at:</label>
     <input
             type="datetime-local"
             name="expires_at"
             class="uk-input input-form "
+            placeholder="expires after 3 days if empty"
     >
     {% block submit %}
     {{ block.super }}

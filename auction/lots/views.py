@@ -19,12 +19,13 @@ def create(request):
     elif request.method == 'POST':
         lot = Lot()
         lot.author = request.user
+        lot.set_price = 0
         form = LotsForm(request.POST, request.FILES, instance=lot)
         if form.is_valid():
             lot = form.save()
             lot.image = request.FILES['image']
             lot.save()
-            return redirect("/")
+            return redirect(f"/lots/lot/{lot.id}")
         else:
             return render(
                 request,

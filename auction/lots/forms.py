@@ -15,7 +15,7 @@ class LotsForm(forms.ModelForm):
     )
     base_price = forms.IntegerField(
         widget=forms.NumberInput,
-        required=False
+        required=True
     )
     image = forms.FileField()
 

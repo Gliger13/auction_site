@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block title %}
-    Page
+    Lots
 {% endblock %}
 
 {% block app %}
@@ -78,13 +78,17 @@
 
                     <li><a href="/lots/page/{{ lots.previous_page_number }}"><span uk-pagination-previous></span></a></li>
                     <li><a href="/lots/page/1">1</a></li>
-                    <li class="uk-disabled"><span>...</span></li>
-                    <li>
-                        <a href="/lots/page/{{ lots.previous_page_number }}">
-                            {{ lots.previous_page_number }}
-                        </a>
-                    </li>
 
+                    {% if lots.previous_page_number != 1%}
+
+                        <li class="uk-disabled"><span>...</span></li>
+                        <li>
+                            <a href="/lots/page/{{ lots.previous_page_number }}">
+                                {{ lots.previous_page_number }}
+                            </a>
+                        </li>
+
+                    {% endif %}]
                 {% endif %}
                     <li class="uk-active"><span>{{ lots.number }}</span></li>
                 {% if lots.has_next %}
@@ -94,14 +98,17 @@
                             {{ lots.next_page_number }}
                         </a>
                     </li>
-                    <li class="uk-disabled"><span>...</span></li>
-                    <li>
-                        <a href="/lots/page/{{ lots.next_page_number }}">
-                            {{ lots.paginator.num_pages }}
-                        </a>
-                    </li>
-                    <li><a href="/lots/page/{{ lots.next_page_number }}"><span uk-pagination-next></span></a></li>
 
+                    {% if lots.next_page_number != lots.paginator.num_pages %}
+
+                        <li class="uk-disabled"><span>...</span></li>
+                        <li>
+                            <a href="/lots/page/{{ lots.next_page_number }}">
+                                {{ lots.paginator.num_pages }}
+                            </a>
+                        </li>
+                    {% endif %}
+                        <li><a href="/lots/page/{{ lots.next_page_number }}"><span uk-pagination-next></span></a></li>
                 {% endif %}
             </ul>
         </div>
