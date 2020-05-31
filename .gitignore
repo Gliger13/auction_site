@@ -19,4 +19,4 @@ auction/media
 
 # Test images
 
-test_data/
+auction/lots/management/data
