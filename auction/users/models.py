@@ -88,7 +88,7 @@ class User(AbstractUser):
 
 class Avatar(models.Model):
     user = models.ForeignKey(User, related_name='avatar', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='media', default='/users/base_icon.jpg')
+    image = models.ImageField(upload_to='media', default='users/base_icon.jpg')
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

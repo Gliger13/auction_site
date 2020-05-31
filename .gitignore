@@ -16,3 +16,7 @@ secrets.py
 
 # User media
 auction/media
+
+# Test images
+
+auction/lots/management/data

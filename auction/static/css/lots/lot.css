@@ -1,0 +1,92 @@
+.lot_card {
+    margin 100px;
+    padding 100px;
+
+}
+
+.lot_image {
+    width: auto;
+}
+
+
+.toggled_form {
+    /* background-color: #c8c8c1; */
+    color: black;
+}
+
+.price {
+    font-size: 1.5em;
+}
+
+.show_button {
+    max-width: 80%;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1em;
+}
+
+.field_wrapper{
+    margin-top: 13px;
+    margin-bottom: 13px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.errorlist{
+    color: red;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8em;
+    text-align: ustify;
+}
+
+.error input, .error select{
+    color: red;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-size: 4px;
+    text-align: ustify;
+}
+
+.error {
+    color: red;
+    margin: 0;
+    padding: 0;
+    font-size: 1.2em;
+    text-align: ustify;
+}
+
+.correct {
+    color: green;
+    margin: 0;
+    padding: 0;
+    font-size: 1.2em;
+    text-align: ustify;
+}
+
+.input-form {
+    padding: 0;
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 90%;
+}
+
+.time_left {
+    color: black;
+    font-size: 2em;
+
+}
+
+.oneline {
+    display: inline-block;
+}
+
+span {
+    font-size: 0.5em;
+    text-align: center;
+    display: inline-block;
+}

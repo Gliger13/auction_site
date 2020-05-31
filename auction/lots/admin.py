@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from lots.models import Lot, Bet
+
+admin.site.register(Lot)
+admin.site.register(Bet)

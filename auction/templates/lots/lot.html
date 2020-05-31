@@ -1,0 +1,106 @@
+{% extends 'base/main.html' %}
+{% load static %}
+
+{% block head %}
+<link
+        rel="stylesheet"
+        href="{% static 'css/lots/page.css' %}"
+        type="text/css"
+>
+<link
+        rel="stylesheet"
+        href="{% static 'css/lots/lot.css' %}"
+        type="text/css"
+>
+{% endblock head %}
+
+{% block title %}
+    Lot
+{% endblock %}
+
+{% block app %}
+
+<div class="page">
+    <div class="uk-card uk-card-default uk-width-1-1@m">
+        <div class="lot_card">
+            <div class="uk-card-body">
+            <article class="uk-article">
+                <h1 class="uk-article-title uk-heading-line">{{ lot.heading }}</h1>
+                <p class="uk-article-meta">Added by {{ lot.author }}
+                    <time>
+                        {{ lot.created_at }}
+                    </time>
+                </p>
+                {% if lot.image %}
+                    <img class="lot_image" src="{{ lot.image.url }}">
+                {% else %}
+                    <img class="lot_image" src="{% static 'images/lots/base_lot.png' %}">
+                {% endif %}
+                <p class="uk-text-lead">{{ lot.text_description }}</p>
+                <hr class="uk-divider-icon">
+                <div class="price">
+                    Base price: {{ lot.base_price }}
+                </div>
+                <div class="price">
+                    Current price: {{ lot.current_price }}
+                </div>
+
+                <dib class="oneline">
+                    <div class="uk-column-1-4">
+                        <div class="price">
+                            Time left:
+                        </div>
+                        <div class="uk-grid-small uk-child-width-auto uk-margin time_left" uk-grid uk-countdown="date: {{ expires_at_str }}">
+                            <div>
+                                <div class="uk-countdown-number uk-countdown-days time_left"></div>
+                            </div>
+                            <div>
+                                <div class="uk-countdown-number uk-countdown-hours time_left"></div>
+                            </div>
+                            <div>
+                                <div class="uk-countdown-number uk-countdown-minutes time_left"></div>
+                            </div>
+                            <div>
+                                <div class="uk-countdown-number uk-countdown-seconds time_left"></div>
+                            </div>
+                        </div>
+                    </dib>
+                </div>
+
+
+
+
+                <form class="uk-form" method="post" action="/lots/lot/{{ lot.id }}">
+                    <div class="uk-column-1-4">
+                        {% csrf_token %}
+                        {% for field in form %}
+                        {{ field }}
+                        {% endfor %}
+                        <div class="register_button">
+                            <button
+                                    type="submit"
+                                    class="uk-button uk-button-secondary uk-button-default uk-width-1-1"
+                            >
+                                set bet
+                            </button>
+                        </div>
+                    </div>
+                    {% if is_POST_request %}
+                    <div class="error">
+                        <p> {{ form.non_field_errors }} </p>
+                        <p> {{ field.errors }} </p>
+                        {% if not form.is_correct %}
+                        <p>Failed to set price</p>
+                    </div>
+                        {% else %}
+                        <div class="correct">
+                            <p>Bet set</p>
+                        </div>
+                        {% endif %}
+                    {% endif %}
+                </form>
+            </article>
+        </div>
+    </div>
+</div>
+{% endblock %}
