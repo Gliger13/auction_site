@@ -1,0 +1,84 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block head %}
+<link
+        rel="stylesheet"
+        href="{% static 'css/users/settings.css' %}"
+        type="text/css"
+>
+{% endblock %}
+{% block title %}
+    Settings
+{% endblock %}
+
+{% block app %}
+<div class="uk-card uk-card-default uk-width-1-1@m">
+    <div class="uk-card-body user_card">
+        <h1>{{ showed_user.username }}</h1>
+        <div class="uk-column-1-2">
+            <div class="user_img">
+                {% if showed_user.avatar.image.url %}
+                    <img src="{{ showed_user.avatar.image.url }}">
+                {% else %}
+                    <img src="{% static 'images/users/base_icon_invert.png' %}">
+                {% endif %}
+            </div>
+            <div class="user_info">
+                <p>Since: <b>{{ showed_user.date_joined.date }}</b></p>
+                <p>With us <b>{{ showed_user.days_after_reg }} days</b></p>
+            </div>
+        </div>
+        <hr class="uk-divider-icon">
+        {% block user_info %}
+
+            <div class="user_info">
+                {% if showed_user.first_name and showed_user.second_name %}
+                <p>
+                    Name - {{ showed_user.first_name }} {{ showed_user.second_name }}
+                </p>
+                {% elif showed_user.first_name %}
+                <p>
+                    First name - {{ showed_user.first_name }}
+                </p>
+                {% elif showed_user.second_name %}
+                <p>
+                    Second name - {{ showed_user.second_name }}
+                </p>
+                {% endif %}
+                <p>
+                    Email address - {{ showed_user.hidden_email }}
+                    {% if showed_user.is_email_verified %}
+                        <span class="uk-badge">verified</span>
+                    {% else %}
+                        <span class="uk-badge">not verified</span>
+                    {% endif %}
+                </p>
+                {% if showed_user.hidden_telephone %}
+                <p>
+                    Telephone - {{ showed_user.hidden_telephone }}
+                </p>
+                {% endif %}
+            </div>
+            {% if user.username == showed_user.username %}
+            <div class="uk-column-1-2">
+                <div class="button_wrapper">
+                    <a href="/accounts/settings">
+                        <button class="uk-button uk-button-secondary">Edit account</button>
+                    </a>
+                </div>
+                {% if not user.is_email_verified %}
+                <div class="button_wrapper">
+                    <a href="/accounts/verify">
+                        <button class="uk-button uk-button-secondary">Send verification letter</button>
+                    </a>
+               </div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+        {% endblock %}
+    </div>
+</div>
+
+{% endblock %}
