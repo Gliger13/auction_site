@@ -10,6 +10,7 @@ class Lot(models.Model):
     text_description = models.TextField()
     image = models.ImageField(upload_to='media', null=True)
     base_price = models.IntegerField(default=0)
+    min_price_step = models.IntegerField(default=0)
     current_price = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField(default=timezone.now().replace(microsecond=0) + timedelta(days=3))

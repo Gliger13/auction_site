@@ -70,9 +70,13 @@ def lot(request, lot_id):
     elif request.method == 'POST':
         is_POST_request = True
         if request.user:
-            bet = Bet()
-            bet.lot = lot
-            bet.set_by = request.user
+            bet = Bet.objects.filter(lot=lot, set_by=request.user)
+            if not bet.exists():
+                bet = Bet()
+                bet.lot = lot
+                bet.set_by = request.user
+            else:
+                bet = bet.get()
             form = SetBitForm(request.POST, instance=bet)
 
             if (form.is_valid() and

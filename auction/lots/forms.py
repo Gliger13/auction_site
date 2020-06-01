@@ -26,6 +26,7 @@ class LotsForm(forms.ModelForm):
             'heading',
             'text_description',
             'base_price',
+            'min_price_step'
         ]
 
     def is_valid(self):
@@ -57,6 +58,7 @@ class SetBitForm(forms.ModelForm):
 
     def clean_lot(self, lot):
         if (lot.current_price >= int(self.data['set_price']) or
+                int(self.data['set_price']) - lot.current_price < lot.min_price_step or
                 lot.base_price >= int(self.data['set_price'])):
             return False
         else:
