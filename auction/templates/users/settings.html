@@ -1,0 +1,24 @@
+{% extends 'users/account.html' %}
+{% load static %}
+
+{% block user_info %}
+
+<form class="uk-form" method="post" action="/accounts/settings/" enctype="multipart/form-data">
+    <div class="form_wrapper">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="field_wrapper uk-column-1-3">
+            <p>{{ field.label_tag }}</p>
+            {{ field }}
+            {{ field.errors }}
+        </div>
+        {% endfor %}
+
+        {{ form.non_field_errors }}
+        <div class="register_button">
+            <button type="submit" class="uk-button uk-button-secondary uk-button-small uk-width-1-1">Edit</button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
