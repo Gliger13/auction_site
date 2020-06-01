@@ -77,17 +77,29 @@ class LoginForm(forms.Form):
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'uk-input input-form'
 
-    username = forms.CharField()
+    username_or_email = forms.CharField()
     password = forms.CharField(
         widget=forms.PasswordInput()
     )
 
     def get_user(self, request):
-        return authenticate(
+        # Try authenticate by username
+        user_by_username = authenticate(
             request,
-            username=self.cleaned_data['username'],
+            username=self.cleaned_data['username_or_email'],
             password=self.cleaned_data['password']
         )
+        if user_by_username:
+            return user_by_username
+        else:
+            # Try authenticate by email
+            user = User.objects.get(email=self.cleaned_data['username_or_email'])
+            if user:
+                return authenticate(
+                    request,
+                    username=user.username,
+                    password=self.cleaned_data['password']
+                )
 
 
 class SettingsForm(forms.ModelForm):
