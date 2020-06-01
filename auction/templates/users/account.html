@@ -27,6 +27,8 @@
             <div class="user_info">
                 <p>Since: <b>{{ showed_user.date_joined.date }}</b></p>
                 <p>With us <b>{{ showed_user.days_after_reg }} days</b></p>
+                <p>Lots set: <b>{{ showed_user.lots_count }}</b></p>
+                <p>Bets set: <b>{{ showed_user.bets_count }}</b></p>
             </div>
         </div>
         <hr class="uk-divider-icon">
@@ -59,7 +61,28 @@
                     Telephone - {{ showed_user.hidden_telephone }}
                 </p>
                 {% endif %}
+                {% if showed_user.lots.all %}
+                <hr class="uk-divider-icon">
+                <p> Lots set: </p>
+                <ul class="uk-list uk-list-bullet">
+                    {% for lot in showed_user.lots.all %}
+                    <li>
+                        <p>
+                            <a class="uk-link-heading" href="/lots/lot/{{ lot.id }}">
+                                {{ lot.heading }}
+                            </a>
+                            {% if lot.is_available %}
+                            <span class="uk-badge">available</span>
+                            {% else %}
+                            <span class="uk-badge">sold out</span>
+                            {% endif %}
+                        </p>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
             </div>
+
             {% if user.username == showed_user.username %}
             <div class="uk-column-1-2">
                 <div class="button_wrapper">

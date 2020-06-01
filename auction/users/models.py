@@ -68,6 +68,14 @@ class User(AbstractUser):
         else:
             return None
 
+    @property
+    def lots_count(self):
+        return self.lots.count
+
+    @property
+    def bets_count(self):
+        return self.bets.count
+
     def get_secret_token(self):
         return "".join(
             random.sample(self.TOKEN_ALPHABET, self.TOKEN_LENGTH)
