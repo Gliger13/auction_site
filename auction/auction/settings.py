@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'users.apps.UsersConfig',
     'lots.apps.LotsConfig',
+    'django_cron',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +51,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CRON_CLASSES = [
+    "lots.cron.StartLots",
 ]
 
 ROOT_URLCONF = 'auction.urls'

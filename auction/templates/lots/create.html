@@ -11,9 +11,11 @@
     {% block legend %}
     <legend class="uk-legend">Create lot</legend>
     {% endblock %}
+
     {% block content_form %}
     {{ block.super }}
     {% endblock %}
+
     <label>Expires at:</label>
     <input
             type="datetime-local"

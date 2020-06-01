@@ -11,11 +11,12 @@ class LotsForm(forms.ModelForm):
 
     text_description = forms.CharField(
         required=False,
-        widget=forms.Textarea
+        widget=forms.Textarea()
     )
+
     base_price = forms.IntegerField(
-        widget=forms.NumberInput,
-        required=True
+        widget=forms.NumberInput(),
+        required=True,
     )
     image = forms.FileField()
 

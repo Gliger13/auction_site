@@ -14,6 +14,7 @@ class Lot(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField(default=timezone.now().replace(microsecond=0) + timedelta(days=3))
     author = models.ForeignKey(get_user_model(), related_name='lots', on_delete=models.CASCADE)
+    is_mail_send = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['-created_at', 'base_price']

@@ -101,9 +101,6 @@ def settings(request):
 @login_required
 def show_account(request, username):
     user = User.objects.get(username=username)
-    print('\n', type(user.lots))
-    print(user.lots.all())
-    print(dir(user.lots), '\n')
     if request.method == 'GET':
         return render(
             request,
