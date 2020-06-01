@@ -18,10 +18,14 @@ class Lot(models.Model):
     class Meta:
         ordering = ['-created_at', 'base_price']
 
+    @property
+    def is_available(self):
+        return timezone.now() < self.expires_at
+
 
 class Bet(models.Model):
     lot = models.ForeignKey(Lot, related_name='bets', on_delete=models.CASCADE)
-    set_by = models.ForeignKey(get_user_model(), related_name='set_by_user', on_delete=models.CASCADE)
+    set_by = models.ForeignKey(get_user_model(), related_name='bets', on_delete=models.CASCADE)
     set_price = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
 

@@ -6,10 +6,18 @@
 {% endblock %}
 
 {% block form %}
+    {% if user.is_email_verified %}
     <h4>
         Congratulations on verified email. You have more actions!
     </h4>
     <div class="card-img">
         <img src="{% static 'images/users/bow_down.png' %}">
     </div>
+    {% else %}
+    <p class="verify_text">
+        A letter has been sent to your inbox {{ user.email }}.
+        Please follow the link provided in the letter
+        from the mailbox to verify you account.
+    </p>
+    {% endif %}
 {% endblock %}

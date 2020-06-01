@@ -4,7 +4,8 @@ from django.core.exceptions import NON_FIELD_ERRORS
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect
 
-from users.forms import RegistrationForm, LoginForm
+from users.forms import RegistrationForm, LoginForm, SettingsForm
+from users.models import User
 
 
 def register(request):
@@ -28,12 +29,19 @@ def register(request):
 
 def verify(request):
     user = request.user
+    if user.is_email_verified:
+        return render(request, 'users/email_verified.html')
     data = request.GET
-    if user.is_token_correct(data['token']):
-        user.verify_email()
+    token = data.get('token')
+    if not token:
+        user.send_verification_email()
         return render(request, 'users/email_verified.html')
     else:
-        return Http404("Not Found")
+        if user.is_token_correct(token):
+            user.verify_email()
+            return render(request, 'users/email_verified.html')
+        else:
+            return Http404("Not Found")
 
 
 def login_user(request):
@@ -58,3 +66,49 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return HttpResponseRedirect('')
+
+
+@login_required
+def settings(request):
+    user = request.user
+    if request.method == 'GET':
+        form = SettingsForm(instance=user)
+        return render(
+            request,
+            'users/settings.html',
+            context={
+                'form': form,
+                'showed_user': user,
+            })
+    elif request.method == 'POST':
+        user = request.user
+        form = SettingsForm(request.POST, request.FILES, instance=user)
+        form.set_user(user)
+        if form.is_valid():
+            form.image = request.FILES.get('image')
+            form.save()
+            return redirect(f'/accounts/account/{user.username}')
+        else:
+            return render(
+                request,
+                'users/settings.html',
+                context={
+                    'form': form,
+                    'showed_user': user,
+                })
+
+
+@login_required
+def show_account(request, username):
+    user = User.objects.get(username=username)
+    print('\n', type(user.lots))
+    print(user.lots.all())
+    print(dir(user.lots), '\n')
+    if request.method == 'GET':
+        return render(
+            request,
+            'users/account.html',
+            context={
+                'showed_user': user
+            }
+        )
