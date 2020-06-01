@@ -3,6 +3,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.utils import timezone
 
+from auction import settings
 from lots.forms import LotsForm, SetBitForm
 from lots.models import Lot, Bet
 
@@ -38,8 +39,7 @@ def page(request, num):
     if request.method == 'GET':
         lots_list = Lot.objects.all()
 
-        paginator = Paginator(lots_list, 5, orphans=2)
-
+        paginator = Paginator(lots_list, settings.PAGINATOR_MAX_PAGES, orphans=2)
         page_number = num
         page_obj = paginator.get_page(page_number)
         return render(

@@ -19,6 +19,10 @@
     padding: 5%;
 }
 
+.card {
+    background-color: #FBFBF2;
+}
+
 .nickname_header:hover {
     color: rgb(100, 100, 100);
 }

@@ -26,7 +26,11 @@
             <div class="uk-card-body">
             <article class="uk-article">
                 <h1 class="uk-article-title uk-heading-line">{{ lot.heading }}</h1>
-                <p class="uk-article-meta">Added by {{ lot.author }}
+                <p class="meta-info">
+                    Added by
+                    <a class="uk-link-heading" href="/accounts/account/{{ lot.author }}">
+                        {{ lot.author }}
+                    </a>
                     <time>
                         {{ lot.created_at }}
                     </time>
@@ -48,29 +52,27 @@
                     Minimum price step: {{ lot.min_price_step }}
                 </div>
 
-                <dib class="oneline">
-                    <div class="uk-column-1-4">
-                        <div class="price">
+                <div class="time_left">
+                    <div class="uk-grid-small uk-child-width-auto uk-margin time_left" uk-grid uk-countdown="date: {{ expires_at_str }}">
+                        <div class="price uk-countdown-number">
+                            <span>
                             Time left:
+                            </span>
                         </div>
-                        <div class="uk-grid-small uk-child-width-auto uk-margin time_left" uk-grid uk-countdown="date: {{ expires_at_str }}">
-                            <div>
-                                <div class="uk-countdown-number uk-countdown-days time_left"></div>
-                            </div>
-                            <div>
-                                <div class="uk-countdown-number uk-countdown-hours time_left"></div>
-                            </div>
-                            <div>
-                                <div class="uk-countdown-number uk-countdown-minutes time_left"></div>
-                            </div>
-                            <div>
-                                <div class="uk-countdown-number uk-countdown-seconds time_left"></div>
-                            </div>
+                        <div>
+                            <div class="uk-countdown-number uk-countdown-days time_left"></div>
                         </div>
-                    </dib>
+                        <div>
+                            <div class="uk-countdown-number uk-countdown-hours time_left"></div>
+                        </div>
+                        <div>
+                            <div class="uk-countdown-number uk-countdown-minutes time_left"></div>
+                        </div>
+                        <div>
+                            <div class="uk-countdown-number uk-countdown-seconds time_left"></div>
+                        </div>
+                    </div>
                 </div>
-
-
 
 
                 <form class="uk-form" method="post" action="/lots/lot/{{ lot.id }}">

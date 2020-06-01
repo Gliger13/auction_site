@@ -54,7 +54,7 @@ def login_user(request):
             user = form.get_user(request)
             if user:
                 login(request, user)
-                return redirect('/')
+                return redirect('/lots/page/1')
             else:
                 form.errors[NON_FIELD_ERRORS] = 'Cannot perform login with this credentials'
                 return render(request, 'users/login.html', context={'form': form})

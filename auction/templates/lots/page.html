@@ -45,6 +45,7 @@
                                 <time>
                                     {{ lot.created_at }}
                                 </time>
+                                 by {{ lot.author }}
                             </p>
                         </div>
                     </div>
@@ -72,48 +73,50 @@
     </div>
     {% endfor %}
     {% if lots %}
-    <div class="lot_wrapper">
-        <div class="uk-card-header lot_card">
-            <ul class="uk-pagination" uk-margin>
-                {% if lots.has_previous %}
+        {% if lots.has_previous or lots.has_next %}
+        <div class="lot_wrapper">
+            <div class="uk-card-header lot_card">
+                <ul class="uk-pagination uk-flex-center">
+                    {% if lots.has_previous %}
 
-                    <li><a href="/lots/page/{{ lots.previous_page_number }}"><span uk-pagination-previous></span></a></li>
-                    <li><a href="/lots/page/1">1</a></li>
+                        <li><a href="/lots/page/{{ lots.previous_page_number }}"><span uk-pagination-previous></span></a></li>
+                        <li><a href="/lots/page/1">1</a></li>
 
-                    {% if lots.previous_page_number != 1%}
+                        {% if lots.previous_page_number != 1 %}
 
-                        <li class="uk-disabled"><span>...</span></li>
-                        <li>
-                            <a href="/lots/page/{{ lots.previous_page_number }}">
-                                {{ lots.previous_page_number }}
-                            </a>
-                        </li>
+                            <li class="uk-disabled"><span>...</span></li>
+                            <li>
+                                <a href="/lots/page/{{ lots.previous_page_number }}">
+                                    {{ lots.previous_page_number }}
+                                </a>
+                            </li>
 
-                    {% endif %}]
-                {% endif %}
-                    <li class="uk-active"><span>{{ lots.number }}</span></li>
-                {% if lots.has_next %}
+                        {% endif %}
+                    {% endif %}
+                        <li class="uk-active"><span>{{ lots.number }}</span></li>
+                    {% if lots.has_next %}
 
-                    <li>
-                        <a href="/lots/page/{{ lots.next_page_number }}">
-                            {{ lots.next_page_number }}
-                        </a>
-                    </li>
-
-                    {% if lots.next_page_number != lots.paginator.num_pages %}
-
-                        <li class="uk-disabled"><span>...</span></li>
                         <li>
                             <a href="/lots/page/{{ lots.next_page_number }}">
-                                {{ lots.paginator.num_pages }}
+                                {{ lots.next_page_number }}
                             </a>
                         </li>
+
+                        {% if lots.next_page_number != lots.paginator.num_pages %}
+
+                            <li class="uk-disabled"><span>...</span></li>
+                            <li>
+                                <a href="/lots/page/{{ lots.next_page_number }}">
+                                    {{ lots.paginator.num_pages }}
+                                </a>
+                            </li>
+                        {% endif %}
+                            <li><a href="/lots/page/{{ lots.next_page_number }}"><span uk-pagination-next></span></a></li>
                     {% endif %}
-                        <li><a href="/lots/page/{{ lots.next_page_number }}"><span uk-pagination-next></span></a></li>
-                {% endif %}
-            </ul>
+                </ul>
+            </div>
         </div>
-    </div>
+        {% endif %}
     {% endif %}
 </div>
 

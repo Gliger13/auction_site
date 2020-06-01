@@ -15,7 +15,7 @@
 }
 
 .price {
-    font-size: 1.5em;
+    font-size: 150%;
 }
 
 .show_button {
@@ -75,18 +75,17 @@
     width: 90%;
 }
 
-.time_left {
-    color: black;
-    font-size: 2em;
-
-}
-
 .oneline {
     display: inline-block;
+    float: left;
 }
 
 span {
-    font-size: 0.5em;
     text-align: center;
     display: inline-block;
+}
+
+.time_left span {
+    color: black;
+    font-size: 40%;
 }

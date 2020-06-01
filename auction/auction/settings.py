@@ -116,7 +116,7 @@ AUTH_USER_MODEL = 'users.User'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -145,3 +145,5 @@ MEDIA_ROOT = 'media'
 ADMIN_EMAIL = 'admin@admin.com'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+PAGINATOR_MAX_PAGES = 5
