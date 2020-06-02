@@ -1,9 +1,11 @@
+from asgiref.sync import async_to_sync
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.utils import timezone
 
 from auction import settings
+from lots import tags_of_images
 from lots.forms import LotsForm, SetBitForm
 from lots.models import Lot, Bet
 
@@ -26,6 +28,8 @@ def create(request):
             lot = form.save()
             lot.image = request.FILES['image']
             lot.save()
+            async_tags = async_to_sync(tags_of_images.images_tags, force_new_loop=True)
+            async_tags(lot)
             return redirect(f"/lots/lot/{lot.id}")
         else:
             return render(

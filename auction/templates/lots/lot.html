@@ -1,4 +1,4 @@
-{% extends 'base/main.html' %}
+{% extends 'lots/page.html' %}
 {% load static %}
 
 {% block head %}
@@ -25,29 +25,20 @@
         <div class="lot_card">
             <div class="uk-card-body">
             <article class="uk-article">
-                <h1 class="uk-article-title uk-heading-line">{{ lot.heading }}</h1>
-                <p class="meta-info">
-                    Added by
-                    <a class="uk-link-heading" href="/accounts/account/{{ lot.author }}">
-                        {{ lot.author }}
-                    </a>
-                    <time>
-                        {{ lot.created_at }}
-                    </time>
-                </p>
-                {% if lot.image %}
-                    <img class="lot_image" src="{{ lot.image.url }}">
-                {% else %}
-                    <img class="lot_image" src="{% static 'images/lots/base_lot.png' %}">
-                {% endif %}
+                {% block main_content %}
+                    {{ block.super }}
+                {% endblock %}
+                {% for tag in lot.img_tags.all %}
+                    {% if tag %}
+                        <div class="tag">
+                            <span class="uk-badge tags" style="background-color: rgba{{ tag.color }}; color: rgb(25, 25, 25);">
+                                {{ tag.tag_name }}: {{ tag.confidence }}
+                            </span>
+                        </div>
+                    {% endif %}
+                {% endfor %}
                 <p class="uk-text-lead">{{ lot.text_description }}</p>
                 <hr class="uk-divider-icon">
-                <div class="price">
-                    Base price: {{ lot.base_price }}
-                </div>
-                <div class="price">
-                    Current price: {{ lot.current_price }}
-                </div>
                 <div class="price">
                     Minimum price step: {{ lot.min_price_step }}
                 </div>

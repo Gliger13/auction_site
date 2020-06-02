@@ -30,40 +30,52 @@
     <div class="lots_title lot_wrapper">
         Available lots:
     </div>
-
     {% endif %}
 
     {% for lot in lots %}
      <div class="lot_wrapper">
          <div class="uk-card uk-card-default uk-width-1-1@m">
             <div class="lot_card">
+                {% block main_content %}
                 <div class="uk-card-header">
                     <div class="uk-grid-small uk-flex-middle" uk-grid>
                         <div class="uk-width-expand">
                             <h1 class="uk-card-title uk-margin-remove-bottom">{{ lot.heading }}</h1>
                             <p class="uk-text-meta uk-margin-remove-top">
+                                Added by
+                                <a class="uk-link-heading" href="/accounts/account/{{ lot.author }}">
+                                    {{ lot.author }}
+                                </a>
                                 <time>
                                     {{ lot.created_at }}
                                 </time>
-                                 by {{ lot.author }}
                             </p>
                         </div>
                     </div>
                 </div>
+
                 <div class="uk-card-body">
                     <div class="uk-column-1-2">
-                    {% if lot.image %}
-                    <img class="lot_image" src="{{ lot.image.url }}">
-                    {% else %}
-                    <img class="lot_image" src="{% static 'images/lots/base_lot.png' %}">
-                    {% endif %}
-                    <p class="price">
-                        Start price: {{ lot.base_price }}
-                    </p>
-                    <p class="price">
-                        Last bit: {{ lot.current_price }}
-                    </p>
+                        {% if lot.image %}
+                        <img class="lot_image" src="{{ lot.image.url }}">
+                        {% else %}
+                        <img class="lot_image" src="{% static 'images/lots/base_lot.png' %}">
+                        {% endif %}
+
+                        {% for tag in lot.tags_list %}
+                        {% if tag and not tag == 'None' %}
+                        <span class="uk-badge">{{ tag }}</span>
+                        {% endif %}
+                        {% endfor %}
+
+                        <p class="price">
+                            Start price: {{ lot.base_price }}
+                        </p>
+                        <p class="price">
+                            Last bit: {{ lot.current_price }}
+                        </p>
                     </div>
+                    {% endblock %}
                 </div>
                 <div class="uk-card-footer">
                     <a href="/lots/lot/{{ lot.id }}" class="uk-button uk-button-text">Read more</a>

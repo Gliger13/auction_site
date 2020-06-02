@@ -147,3 +147,5 @@ ADMIN_EMAIL = 'admin@admin.com'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 PAGINATOR_MAX_PAGES = 5
+
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10

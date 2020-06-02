@@ -5,28 +5,48 @@ from lots.models import Lot, Bet
 
 class LotsForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
+        self.lot = None
         super(LotsForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
-            visible.field.widget.attrs['class'] = 'uk-input input-form'
+            if type(visible.field.widget) == forms.Textarea:
+                visible.field.widget.attrs['class'] = 'uk-textarea input-form'
+            else:
+                visible.field.widget.attrs['class'] = 'uk-input input-form'
 
     text_description = forms.CharField(
         required=False,
-        widget=forms.Textarea()
+        widget=forms.Textarea(attrs={
+            'rows': 4,
+            'cols': 3,
+        })
+    )
+
+    tags = forms.CharField(
+        label="Tags. Separate tags by ';'",
+        required=False,
+        widget=forms.Textarea(attrs={
+            'rows': 4,
+            'cols': 3,
+        })
     )
 
     base_price = forms.IntegerField(
         widget=forms.NumberInput(),
         required=True,
     )
-    image = forms.FileField()
+    image = forms.FileField(
+        widget=forms.FileInput
+    )
 
     class Meta:
         model = Lot
         fields = [
             'heading',
             'text_description',
+            'tags',
             'base_price',
-            'min_price_step'
+            'min_price_step',
+
         ]
 
     def is_valid(self):
