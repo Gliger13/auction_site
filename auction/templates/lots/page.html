@@ -16,6 +16,53 @@
 {% block app %}
 
 <div class="page">
+    {% if lots %}
+    <div class="lot_wrapper">
+         <div class="uk-card uk-card-default uk-width-1-1@m">
+            <div class="lot_card filter">
+
+                <form class="uk-form" method="post" action="/lots/page/{{ lots.number }}">
+
+                    {% csrf_token %}
+                    <div class="uk-column-1-2">
+
+                        {% for field in form %}
+
+                            <div class="uk-column-1-2">
+                                <div class="field_wrapper">
+                                    <div class="uk-column-1-2">
+                                        <p class="field_label">{{ field.label_tag }}</p>
+                                        <div>
+                                            {{ field }}
+                                            {{ field.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                             </div>
+
+                        {% endfor %}
+                        {{ form.non_field_errors }}
+                    </div>
+
+                    <div class="filter_button">
+                        {% block submit %}
+                            <button
+                                    type="submit"
+                                    class="uk-button uk-button-primary uk-button-small"
+                            >
+                                Apply
+                            </button>
+                        {% endblock %}
+                    </div>
+
+                </form>
+
+            </div>
+         </div>
+    </div>
+
+    {% endif %}
+
     {% if not lots %}
 
     <div class="lots_title">

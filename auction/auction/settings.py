@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'lots.apps.LotsConfig',
     'django_cron',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

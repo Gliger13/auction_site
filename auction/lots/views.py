@@ -6,7 +6,8 @@ from django.utils import timezone
 
 from auction import settings
 from lots import tags_of_images
-from lots.forms import LotsForm, SetBitForm
+from lots.forms import LotsForm, SetBitForm, FilterForm
+from lots.lots_filter import LotsFilter
 from lots.models import Lot, Bet
 
 
@@ -41,16 +42,33 @@ def create(request):
 
 def page(request, num):
     if request.method == 'GET':
-        lots_list = Lot.objects.all()
-
-        paginator = Paginator(lots_list, settings.PAGINATOR_MAX_PAGES, orphans=2)
-        page_number = num
-        page_obj = paginator.get_page(page_number)
+        form = FilterForm()
+        lots = Lot.objects.all()
+        paginator = Paginator(lots, settings.PAGINATOR_MAX_PAGES, orphans=2)
+        page_obj = paginator.get_page(num)
         return render(
             request,
             'lots/page.html',
             context={
-                'lots': page_obj
+                'lots': page_obj,
+                'form': form,
+            }
+        )
+    if request.method == 'POST':
+        form = FilterForm(request.POST)
+        form.is_valid()
+
+        lots_filter = LotsFilter(form)
+        lots = lots_filter.filtered_lots()
+        paginator = Paginator(lots, settings.PAGINATOR_MAX_PAGES, orphans=2)
+        page_obj = paginator.get_page(num)
+
+        return render(
+            request,
+            'lots/page.html',
+            context={
+                'lots': page_obj,
+                'form': form,
             }
         )
 

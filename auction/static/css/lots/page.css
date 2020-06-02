@@ -52,3 +52,23 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.filter {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 40px;
+    padding-left: 40px;
+    color: rgb(25, 25, 25);
+}
+
+.field_label {
+    display: inline-block
+}
+
+.filter_button {
+    text-align: right;
+}
+
+.field_wrapper {
+    margin: 5%;
+}

@@ -27,8 +27,11 @@ class Lot(models.Model):
 
     @property
     def tags_list(self):
-        print(str(self.tags).split(';'))
         return str(self.tags).split(';')
+
+    @property
+    def price(self):
+        return self.base_price if self.base_price > self.current_price else self.current_price
 
 
 class ImageTags(models.Model):
