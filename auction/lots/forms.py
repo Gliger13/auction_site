@@ -1,6 +1,8 @@
 from django import forms
+from django.core.exceptions import NON_FIELD_ERRORS
 
 from lots.models import Lot, Bet
+from users.models import User
 
 
 class LotsForm(forms.ModelForm):
@@ -134,3 +136,12 @@ class FilterForm(forms.Form):
             'by_author',
             'order_by',
         ]
+
+    def clean_by_author(self):
+        author = self.data.get('by_author')
+        if author:
+            user = User.objects.filter(username=self.data.get('by_author'))
+            if not user.exists():
+                self.errors[NON_FIELD_ERRORS] = "User with this username is not found"
+            else:
+                return author

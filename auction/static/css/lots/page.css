@@ -72,3 +72,12 @@
 .field_wrapper {
     margin: 5%;
 }
+
+.errorlist{
+    color: red;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8em;
+    text-align: ustify;
+}

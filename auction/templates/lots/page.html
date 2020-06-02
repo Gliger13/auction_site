@@ -16,7 +16,6 @@
 {% block app %}
 
 <div class="page">
-    {% if lots %}
     <div class="lot_wrapper">
          <div class="uk-card uk-card-default uk-width-1-1@m">
             <div class="lot_card filter">
@@ -41,9 +40,10 @@
                              </div>
 
                         {% endfor %}
+                    </div>
+                    <div class="errorlist">
                         {{ form.non_field_errors }}
                     </div>
-
                     <div class="filter_button">
                         {% block submit %}
                             <button
@@ -61,7 +61,6 @@
          </div>
     </div>
 
-    {% endif %}
 
     {% if not lots %}
 
