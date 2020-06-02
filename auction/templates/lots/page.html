@@ -23,13 +23,21 @@
                 <form class="uk-form" method="post" action="/lots/page/{{ lots.number }}">
 
                     {% csrf_token %}
+                    <div class="search_wrapper">
+                        <p class="field_label">
+                            <span uk-search-icon></span>
+                            {{ form.search.label }}
+                        </p>
+                        {{ form.search }}
+                    </div>
+
                     <div class="uk-column-1-2">
 
                         {% for field in form %}
-
+                            {% if field != form.search  %}
                             <div class="uk-column-1-2">
                                 <div class="field_wrapper">
-                                    <div class="uk-column-1-2">
+                                    <div class="uk-column-1-2 ">
                                         <p class="field_label">{{ field.label_tag }}</p>
                                         <div>
                                             {{ field }}
@@ -38,6 +46,7 @@
                                     </div>
                                 </div>
                              </div>
+                            {% endif %}
 
                         {% endfor %}
                     </div>

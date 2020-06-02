@@ -96,8 +96,8 @@ class FilterForm(forms.Form):
         for visible in self.visible_fields():
             if type(visible.field.widget) == forms.Select:
                 visible.field.widget.attrs['class'] = 'uk-select'
-            else:
-                visible.field.widget.attrs['class'] = 'uk-input'
+            elif type(visible.field.widget) != forms.TextInput:
+                visible.field.widget.attrs['class'] = 'uk-input field-input'
 
     CHOICES = [
         ('price_lth', 'Price: Low to High'),
@@ -107,6 +107,15 @@ class FilterForm(forms.Form):
         ('time_left_lth', 'Time left: High to Low'),
         ('time_left_htl', 'Time left: Low to High'),
     ]
+
+    search = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'uk-search-input uk-search uk-search-large search'
+            }
+        ),
+        required=False,
+    )
 
     min_price = forms.IntegerField(
         widget=forms.NumberInput,
@@ -119,7 +128,11 @@ class FilterForm(forms.Form):
     )
 
     by_author = forms.CharField(
-        widget=forms.TextInput,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'uk-input'
+            }
+        ),
         required=False,
     )
 
@@ -131,6 +144,7 @@ class FilterForm(forms.Form):
 
     class Meta:
         fields = [
+            'search',
             'min_price',
             'max_price',
             'by_author',

@@ -43,6 +43,7 @@ def create(request):
 def page(request, num):
     if request.method == 'GET':
         form = FilterForm()
+
         lots = Lot.objects.all()
         paginator = Paginator(lots, settings.PAGINATOR_MAX_PAGES, orphans=2)
         page_obj = paginator.get_page(num)
