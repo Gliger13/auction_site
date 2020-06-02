@@ -1,9 +1,13 @@
+from asgiref.sync import async_to_sync
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.utils import timezone
 
-from lots.forms import LotsForm, SetBitForm
+from auction import settings
+from lots import tags_of_images
+from lots.forms import LotsForm, SetBitForm, FilterForm
+from lots.lots_filter import LotsFilter
 from lots.models import Lot, Bet
 
 
@@ -25,6 +29,8 @@ def create(request):
             lot = form.save()
             lot.image = request.FILES['image']
             lot.save()
+            async_tags = async_to_sync(tags_of_images.images_tags, force_new_loop=True)
+            async_tags(lot)
             return redirect(f"/lots/lot/{lot.id}")
         else:
             return render(
@@ -36,17 +42,34 @@ def create(request):
 
 def page(request, num):
     if request.method == 'GET':
-        lots_list = Lot.objects.all()
+        form = FilterForm()
 
-        paginator = Paginator(lots_list, 5, orphans=2)
-
-        page_number = num
-        page_obj = paginator.get_page(page_number)
+        lots = Lot.objects.all()
+        paginator = Paginator(lots, settings.PAGINATOR_MAX_PAGES, orphans=2)
+        page_obj = paginator.get_page(num)
         return render(
             request,
             'lots/page.html',
             context={
-                'lots': page_obj
+                'lots': page_obj,
+                'form': form,
+            }
+        )
+    if request.method == 'POST':
+        form = FilterForm(request.POST)
+        form.is_valid()
+
+        lots_filter = LotsFilter(form)
+        lots = lots_filter.filtered_lots()
+        paginator = Paginator(lots, settings.PAGINATOR_MAX_PAGES, orphans=2)
+        page_obj = paginator.get_page(num)
+
+        return render(
+            request,
+            'lots/page.html',
+            context={
+                'lots': page_obj,
+                'form': form,
             }
         )
 
@@ -70,9 +93,13 @@ def lot(request, lot_id):
     elif request.method == 'POST':
         is_POST_request = True
         if request.user:
-            bet = Bet()
-            bet.lot = lot
-            bet.set_by = request.user
+            bet = Bet.objects.filter(lot=lot, set_by=request.user)
+            if not bet.exists():
+                bet = Bet()
+                bet.lot = lot
+                bet.set_by = request.user
+            else:
+                bet = bet.get()
             form = SetBitForm(request.POST, instance=bet)
 
             if (form.is_valid() and

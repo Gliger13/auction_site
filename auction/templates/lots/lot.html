@@ -1,4 +1,4 @@
-{% extends 'base/main.html' %}
+{% extends 'lots/page.html' %}
 {% load static %}
 
 {% block head %}
@@ -25,49 +25,44 @@
         <div class="lot_card">
             <div class="uk-card-body">
             <article class="uk-article">
-                <h1 class="uk-article-title uk-heading-line">{{ lot.heading }}</h1>
-                <p class="uk-article-meta">Added by {{ lot.author }}
-                    <time>
-                        {{ lot.created_at }}
-                    </time>
-                </p>
-                {% if lot.image %}
-                    <img class="lot_image" src="{{ lot.image.url }}">
-                {% else %}
-                    <img class="lot_image" src="{% static 'images/lots/base_lot.png' %}">
-                {% endif %}
+                {% block main_content %}
+                    {{ block.super }}
+                {% endblock %}
+                {% for tag in lot.img_tags.all %}
+                    {% if tag %}
+                        <span class="uk-badge tags" style="background-color: rgba{{ tag.color }}; color: rgb(25, 25, 25);">
+                            {{ tag.tag_name }}: {{ tag.confidence }}
+                        </span>
+                    {% endif %}
+                {% endfor %}
+
                 <p class="uk-text-lead">{{ lot.text_description }}</p>
                 <hr class="uk-divider-icon">
                 <div class="price">
-                    Base price: {{ lot.base_price }}
-                </div>
-                <div class="price">
-                    Current price: {{ lot.current_price }}
+                    Minimum price step: {{ lot.min_price_step }}
                 </div>
 
-                <dib class="oneline">
-                    <div class="uk-column-1-4">
-                        <div class="price">
+                <div class="time_left">
+                    <div class="uk-grid-small uk-child-width-auto uk-margin time_left" uk-grid uk-countdown="date: {{ expires_at_str }}">
+                        <div class="price uk-countdown-number">
+                            <span>
                             Time left:
+                            </span>
                         </div>
-                        <div class="uk-grid-small uk-child-width-auto uk-margin time_left" uk-grid uk-countdown="date: {{ expires_at_str }}">
-                            <div>
-                                <div class="uk-countdown-number uk-countdown-days time_left"></div>
-                            </div>
-                            <div>
-                                <div class="uk-countdown-number uk-countdown-hours time_left"></div>
-                            </div>
-                            <div>
-                                <div class="uk-countdown-number uk-countdown-minutes time_left"></div>
-                            </div>
-                            <div>
-                                <div class="uk-countdown-number uk-countdown-seconds time_left"></div>
-                            </div>
+                        <div>
+                            <div class="uk-countdown-number uk-countdown-days time_left"></div>
                         </div>
-                    </dib>
+                        <div>
+                            <div class="uk-countdown-number uk-countdown-hours time_left"></div>
+                        </div>
+                        <div>
+                            <div class="uk-countdown-number uk-countdown-minutes time_left"></div>
+                        </div>
+                        <div>
+                            <div class="uk-countdown-number uk-countdown-seconds time_left"></div>
+                        </div>
+                    </div>
                 </div>
-
-
 
 
                 <form class="uk-form" method="post" action="/lots/lot/{{ lot.id }}">

@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django_extensions',
     'users.apps.UsersConfig',
     'lots.apps.LotsConfig',
+    'django_cron',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +52,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CRON_CLASSES = [
+    "lots.cron.StartLots",
 ]
 
 ROOT_URLCONF = 'auction.urls'
@@ -111,7 +117,7 @@ AUTH_USER_MODEL = 'users.User'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -140,3 +146,7 @@ MEDIA_ROOT = 'media'
 ADMIN_EMAIL = 'admin@admin.com'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+PAGINATOR_MAX_PAGES = 5
+
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10

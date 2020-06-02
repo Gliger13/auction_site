@@ -16,12 +16,67 @@
 {% block app %}
 
 <div class="page">
+    <div class="lot_wrapper">
+         <div class="uk-card uk-card-default uk-width-1-1@m">
+            <div class="lot_card filter">
+
+                <form class="uk-form" method="post" action="/lots/page/{{ lots.number }}">
+
+                    {% csrf_token %}
+                    <div class="search_wrapper">
+                        <p class="field_label">
+                            <span uk-search-icon></span>
+                            {{ form.search.label }}
+                        </p>
+                        {{ form.search }}
+                    </div>
+
+                    <div class="uk-column-1-2">
+
+                        {% for field in form %}
+                            {% if field != form.search  %}
+                            <div class="uk-column-1-2">
+                                <div class="field_wrapper">
+                                    <div class="uk-column-1-2 ">
+                                        <p class="field_label">{{ field.label_tag }}</p>
+                                        <div>
+                                            {{ field }}
+                                            {{ field.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                             </div>
+                            {% endif %}
+
+                        {% endfor %}
+                    </div>
+                    <div class="errorlist">
+                        {{ form.non_field_errors }}
+                    </div>
+                    <div class="filter_button">
+                        {% block submit %}
+                            <button
+                                    type="submit"
+                                    class="uk-button uk-button-primary uk-button-small"
+                            >
+                                Apply
+                            </button>
+                        {% endblock %}
+                    </div>
+
+                </form>
+
+            </div>
+         </div>
+    </div>
+
+
     {% if not lots %}
 
     <div class="lots_title">
-        Now there are no lots:
+        There are no lots:
     </div>
-    <div class="uk-card uk-card-default uk-width-1-1@m">
+    <div class="uk-card uk-card-default uk-width-1-1@m card">
         <img class="no_lots_image" src="{% static 'images/lots/no_lots.png' %}">
     </div>
 
@@ -30,18 +85,22 @@
     <div class="lots_title lot_wrapper">
         Available lots:
     </div>
-
     {% endif %}
 
     {% for lot in lots %}
      <div class="lot_wrapper">
          <div class="uk-card uk-card-default uk-width-1-1@m">
             <div class="lot_card">
+                {% block main_content %}
                 <div class="uk-card-header">
                     <div class="uk-grid-small uk-flex-middle" uk-grid>
                         <div class="uk-width-expand">
                             <h1 class="uk-card-title uk-margin-remove-bottom">{{ lot.heading }}</h1>
                             <p class="uk-text-meta uk-margin-remove-top">
+                                Added by
+                                <a class="uk-link-heading" href="/accounts/account/{{ lot.author }}">
+                                    {{ lot.author }}
+                                </a>
                                 <time>
                                     {{ lot.created_at }}
                                 </time>
@@ -49,20 +108,33 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="uk-card-body">
                     <div class="uk-column-1-2">
-                    {% if lot.image %}
-                    <img class="lot_image" src="{{ lot.image.url }}">
-                    {% else %}
-                    <img class="lot_image" src="{% static 'images/lots/base_lot.png' %}">
-                    {% endif %}
-                    <p class="price">
-                        Start price: {{ lot.base_price }}
-                    </p>
-                    <p class="price">
-                        Last bit: {{ lot.current_price }}
-                    </p>
+                        {% if lot.image %}
+                        <img class="lot_image" src="{{ lot.image.url }}">
+                        {% else %}
+                        <img class="lot_image" src="{% static 'images/lots/base_lot.png' %}">
+                        {% endif %}
+
+                        {% for tag in lot.tags_list %}
+                        {% if tag and not tag == 'None' %}
+                        <span class="uk-badge">{{ tag }}</span>
+                        {% endif %}
+                        {% endfor %}
+
+                        <p class="price">
+                            Start price: {{ lot.base_price }}
+                        </p>
+                        <p class="price">
+                            {% if lot.bets.latest.set_price %}
+                                Last bit: {{ lot.bets.latest.set_price }}
+                            {% else %}
+                                No bids yet
+                            {% endif %}
+                        </p>
                     </div>
+                    {% endblock %}
                 </div>
                 <div class="uk-card-footer">
                     <a href="/lots/lot/{{ lot.id }}" class="uk-button uk-button-text">Read more</a>
@@ -71,48 +143,52 @@
         </div>
     </div>
     {% endfor %}
-    <div class="lot_wrapper">
-        <div class="uk-card-header lot_card">
-            <ul class="uk-pagination" uk-margin>
-                {% if lots.has_previous %}
+    {% if lots %}
+        {% if lots.has_previous or lots.has_next %}
+        <div class="lot_wrapper">
+            <div class="uk-card-header lot_card">
+                <ul class="uk-pagination uk-flex-center">
+                    {% if lots.has_previous %}
 
-                    <li><a href="/lots/page/{{ lots.previous_page_number }}"><span uk-pagination-previous></span></a></li>
-                    <li><a href="/lots/page/1">1</a></li>
+                        <li><a href="/lots/page/{{ lots.previous_page_number }}"><span uk-pagination-previous></span></a></li>
+                        <li><a href="/lots/page/1">1</a></li>
 
-                    {% if lots.previous_page_number != 1%}
+                        {% if lots.previous_page_number != 1 %}
 
-                        <li class="uk-disabled"><span>...</span></li>
-                        <li>
-                            <a href="/lots/page/{{ lots.previous_page_number }}">
-                                {{ lots.previous_page_number }}
-                            </a>
-                        </li>
+                            <li class="uk-disabled"><span>...</span></li>
+                            <li>
+                                <a href="/lots/page/{{ lots.previous_page_number }}">
+                                    {{ lots.previous_page_number }}
+                                </a>
+                            </li>
 
-                    {% endif %}]
-                {% endif %}
-                    <li class="uk-active"><span>{{ lots.number }}</span></li>
-                {% if lots.has_next %}
+                        {% endif %}
+                    {% endif %}
+                        <li class="uk-active"><span>{{ lots.number }}</span></li>
+                    {% if lots.has_next %}
 
-                    <li>
-                        <a href="/lots/page/{{ lots.next_page_number }}">
-                            {{ lots.next_page_number }}
-                        </a>
-                    </li>
-
-                    {% if lots.next_page_number != lots.paginator.num_pages %}
-
-                        <li class="uk-disabled"><span>...</span></li>
                         <li>
                             <a href="/lots/page/{{ lots.next_page_number }}">
-                                {{ lots.paginator.num_pages }}
+                                {{ lots.next_page_number }}
                             </a>
                         </li>
+
+                        {% if lots.next_page_number != lots.paginator.num_pages %}
+
+                            <li class="uk-disabled"><span>...</span></li>
+                            <li>
+                                <a href="/lots/page/{{ lots.next_page_number }}">
+                                    {{ lots.paginator.num_pages }}
+                                </a>
+                            </li>
+                        {% endif %}
+                            <li><a href="/lots/page/{{ lots.next_page_number }}"><span uk-pagination-next></span></a></li>
                     {% endif %}
-                        <li><a href="/lots/page/{{ lots.next_page_number }}"><span uk-pagination-next></span></a></li>
-                {% endif %}
-            </ul>
+                </ul>
+            </div>
         </div>
-    </div>
+        {% endif %}
+    {% endif %}
 </div>
 
 

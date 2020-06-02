@@ -61,6 +61,7 @@
                     Telephone - {{ showed_user.hidden_telephone }}
                 </p>
                 {% endif %}
+
                 {% if showed_user.lots.all %}
                 <hr class="uk-divider-icon">
                 <p> Lots set: </p>
@@ -75,6 +76,30 @@
                             <span class="uk-badge">available</span>
                             {% else %}
                             <span class="uk-badge">sold out</span>
+                            {% endif %}
+                        </p>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                {% endif %}
+                {% if showed_user.bets.all %}
+                <hr class="uk-divider-icon">
+                <p> Bets set: </p>
+                <ul class="uk-list uk-list-bullet">
+                    {% for bet in showed_user.bets.all %}
+                    <li>
+                        <p> Set bet on
+                            <a class="uk-link-heading" href="/lots/lot/{{ bet.lot.id }}">
+                                 {{ bet.lot.heading }}
+                            </a>
+                            with price {{ bet.set_price }}
+                            {% if bet.lot.is_available and bet.lot.current_price == bet.set_price%}
+                            <span class="uk-badge">highest</span>
+                            {% elif not bet.lot.is_available and bet.lot.current_price == bet.set_price %}
+                            <span class="uk-badge">bought by user</span>
+                            {% else %}
+                            <span class="uk-badge">not the highest</span>
                             {% endif %}
                         </p>
                     </li>
