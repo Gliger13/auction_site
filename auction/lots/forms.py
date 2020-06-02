@@ -80,14 +80,17 @@ class SetBitForm(forms.ModelForm):
         return super(SetBitForm, self).is_valid()
 
     def clean_lot(self, lot):
-        if (lot.current_price >= int(self.data['set_price']) or
-                int(self.data['set_price']) - lot.current_price < lot.min_price_step or
-                lot.base_price >= int(self.data['set_price'])):
-            return False
-        else:
-            lot.current_price = int(self.data['set_price'])
+        set_price = int(self.data['set_price'])
+        if (
+                set_price > lot.current_price and
+                lot.min_price_step <= set_price - lot.current_price or
+                set_price == lot.current_price == lot.base_price
+        ):
+            lot.current_price = set_price
             lot.save()
             return True
+        else:
+            return False
 
 
 class FilterForm(forms.Form):

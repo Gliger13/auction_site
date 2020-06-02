@@ -74,9 +74,9 @@
     {% if not lots %}
 
     <div class="lots_title">
-        Now there are no lots:
+        There are no lots:
     </div>
-    <div class="uk-card uk-card-default uk-width-1-1@m">
+    <div class="uk-card uk-card-default uk-width-1-1@m card">
         <img class="no_lots_image" src="{% static 'images/lots/no_lots.png' %}">
     </div>
 
@@ -127,7 +127,11 @@
                             Start price: {{ lot.base_price }}
                         </p>
                         <p class="price">
-                            Last bit: {{ lot.current_price }}
+                            {% if lot.bets.latest.set_price %}
+                                Last bit: {{ lot.bets.latest.set_price }}
+                            {% else %}
+                                No bids yet
+                            {% endif %}
                         </p>
                     </div>
                     {% endblock %}

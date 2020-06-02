@@ -30,13 +30,12 @@
                 {% endblock %}
                 {% for tag in lot.img_tags.all %}
                     {% if tag %}
-                        <div class="tag">
-                            <span class="uk-badge tags" style="background-color: rgba{{ tag.color }}; color: rgb(25, 25, 25);">
-                                {{ tag.tag_name }}: {{ tag.confidence }}
-                            </span>
-                        </div>
+                        <span class="uk-badge tags" style="background-color: rgba{{ tag.color }}; color: rgb(25, 25, 25);">
+                            {{ tag.tag_name }}: {{ tag.confidence }}
+                        </span>
                     {% endif %}
                 {% endfor %}
+
                 <p class="uk-text-lead">{{ lot.text_description }}</p>
                 <hr class="uk-divider-icon">
                 <div class="price">
