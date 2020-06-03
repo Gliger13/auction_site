@@ -20,9 +20,8 @@
          <div class="uk-card uk-card-default uk-width-1-1@m">
             <div class="lot_card filter">
 
-                <form class="uk-form" method="post" action="/lots/page/{{ lots.number }}">
+                <form class="uk-form" method="get" action="/lots/page/{{ lots.number }}">
 
-                    {% csrf_token %}
                     <div class="search_wrapper">
                         <p class="field_label">
                             <span uk-search-icon></span>
@@ -150,14 +149,18 @@
                 <ul class="uk-pagination uk-flex-center">
                     {% if lots.has_previous %}
 
-                        <li><a href="/lots/page/{{ lots.previous_page_number }}"><span uk-pagination-previous></span></a></li>
-                        <li><a href="/lots/page/1">1</a></li>
+                        <li>
+                            <a href="/lots/page/{{ lots.previous_page_number }}?{{ request.GET.urlencode }}">
+                                <span uk-pagination-previous></span>
+                            </a>
+                        </li>
+                        <li><a href="/lots/page/1?{{ request.GET.urlencode }}">1</a></li>
 
                         {% if lots.previous_page_number != 1 %}
 
                             <li class="uk-disabled"><span>...</span></li>
                             <li>
-                                <a href="/lots/page/{{ lots.previous_page_number }}">
+                                <a href="/lots/page/{{ lots.previous_page_number }}?{{ request.GET.urlencode }}">
                                     {{ lots.previous_page_number }}
                                 </a>
                             </li>
@@ -168,7 +171,7 @@
                     {% if lots.has_next %}
 
                         <li>
-                            <a href="/lots/page/{{ lots.next_page_number }}">
+                            <a href="/lots/page/{{ lots.next_page_number }}?{{ request.GET.urlencode }}">
                                 {{ lots.next_page_number }}
                             </a>
                         </li>
@@ -177,12 +180,16 @@
 
                             <li class="uk-disabled"><span>...</span></li>
                             <li>
-                                <a href="/lots/page/{{ lots.next_page_number }}">
+                                <a href="/lots/page/{{ lots.next_page_number }}?{{ request.GET.urlencode }}">
                                     {{ lots.paginator.num_pages }}
                                 </a>
                             </li>
                         {% endif %}
-                            <li><a href="/lots/page/{{ lots.next_page_number }}"><span uk-pagination-next></span></a></li>
+                            <li>
+                                <a href="/lots/page/{{ lots.next_page_number }}?{{ request.GET.urlencode }}">
+                                    <span uk-pagination-next></span>
+                                </a>
+                            </li>
                     {% endif %}
                 </ul>
             </div>
