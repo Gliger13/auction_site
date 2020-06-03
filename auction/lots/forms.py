@@ -1,5 +1,8 @@
+from datetime import timedelta
+
 from django import forms
 from django.core.exceptions import NON_FIELD_ERRORS
+from django.utils import timezone
 
 from lots.models import Lot, Bet
 from users.models import User
@@ -55,7 +58,12 @@ class LotsForm(forms.ModelForm):
         return super(LotsForm, self).is_valid()
 
     def save(self, commit=True):
+        if self.cleaned_data.get('expires_at'):
+            self.instance.expires_at = self.cleaned_data.get('expires_at')
+        else:
+            self.instance.expires_at = timezone.now().replace(microsecond=0) + timedelta(days=3)
         self.instance.current_price = self.cleaned_data.get('base_price')
+        self.instance.save()
         return super().save(commit)
 
 

@@ -13,7 +13,7 @@ class Lot(models.Model):
     min_price_step = models.IntegerField(default=0)
     current_price = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
-    expires_at = models.DateTimeField(default=timezone.now().replace(microsecond=0) + timedelta(days=3))
+    expires_at = models.DateTimeField(null=True)
     author = models.ForeignKey(get_user_model(), related_name='lots', on_delete=models.CASCADE)
     is_mail_send = models.BooleanField(default=False)
     tags = models.TextField(null=True, blank=True)
