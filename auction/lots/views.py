@@ -41,29 +41,17 @@ def create(request):
 
 
 def page(request, num):
+    print(request.GET.urlencode)
+    print(dir(request.GET))
     if request.method == 'GET':
-        form = FilterForm()
-
-        lots = Lot.objects.all()
-        paginator = Paginator(lots, settings.PAGINATOR_MAX_PAGES, orphans=2)
-        page_obj = paginator.get_page(num)
-        return render(
-            request,
-            'lots/page.html',
-            context={
-                'lots': page_obj,
-                'form': form,
-            }
-        )
-    if request.method == 'POST':
-        form = FilterForm(request.POST)
+        form = FilterForm(request.GET)
         form.is_valid()
 
         lots_filter = LotsFilter(form)
         lots = lots_filter.filtered_lots()
+
         paginator = Paginator(lots, settings.PAGINATOR_MAX_PAGES, orphans=2)
         page_obj = paginator.get_page(num)
-
         return render(
             request,
             'lots/page.html',
