@@ -1,6 +1,7 @@
 from asgiref.sync import async_to_sync
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.http import Http404
 from django.shortcuts import render, redirect
 from django.utils import timezone
 
@@ -41,8 +42,6 @@ def create(request):
 
 
 def page(request, num):
-    print(request.GET.urlencode)
-    print(dir(request.GET))
     if request.method == 'GET':
         form = FilterForm(request.GET)
         form.is_valid()
@@ -66,7 +65,16 @@ def lot(request, lot_id):
     lot = Lot.objects.filter(id=lot_id).get()
     expires_at_str = str(lot.expires_at).replace(' ', 'T')
     is_POST_request = False
+
     if request.method == 'GET':
+
+        if request.GET.get('action') == 'remove':
+            if request.user == lot.author:
+                lot.delete()
+                return redirect('/lots/page/1')
+            else:
+                return Http404("Not Found")
+
         form = SetBitForm()
         return render(
             request,

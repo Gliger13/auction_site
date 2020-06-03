@@ -63,37 +63,93 @@
                         </div>
                     </div>
                 </div>
+                {% if user.is_authenticated %}
+                    {% if user != lot.author %}
 
+                        <form class="uk-form" method="post" action="/lots/lot/{{ lot.id }}">
+                            <div class="uk-column-1-4">
+                                {% csrf_token %}
+                                {% for field in form %}
+                                {{ field }}
+                                {% endfor %}
+                                <div class="register_button">
+                                    <button
+                                            type="submit"
+                                            class="uk-button uk-button-secondary uk-button-default uk-width-1-1"
+                                    >
+                                        set bet
+                                    </button>
+                                </div>
+                            </div>
+                            {% if is_POST_request %}
+                            <div class="error">
+                                <p> {{ form.non_field_errors }} </p>
+                                <p> {{ field.errors }} </p>
+                                {% if not form.is_correct %}
+                                <p>Failed to set price</p>
+                            </div>
+                                {% else %}
+                                <div class="correct">
+                                    <p>Bet set</p>
+                                </div>
+                                {% endif %}
+                            {% endif %}
+                        </form>
 
-                <form class="uk-form" method="post" action="/lots/lot/{{ lot.id }}">
-                    <div class="uk-column-1-4">
-                        {% csrf_token %}
-                        {% for field in form %}
-                        {{ field }}
-                        {% endfor %}
-                        <div class="register_button">
-                            <button
-                                    type="submit"
-                                    class="uk-button uk-button-secondary uk-button-default uk-width-1-1"
-                            >
-                                set bet
-                            </button>
-                        </div>
-                    </div>
-                    {% if is_POST_request %}
-                    <div class="error">
-                        <p> {{ form.non_field_errors }} </p>
-                        <p> {{ field.errors }} </p>
-                        {% if not form.is_correct %}
-                        <p>Failed to set price</p>
-                    </div>
+                    {% else %}
+
+                        {% if lot.bets %}
+
+                            <p class="price">Set bets: </p><br>
+                            {% for bet in lot.bets.all %}
+                                <p class="price">
+                                    {{ bet.set_price }} by
+                                    <a class="uk-link-heading" href="/accounts/account/{{ bet.set_by }}">
+                                        {{ bet.set_by }}
+                                    </a>
+                                    {% if lot.bets.latest == bet %}
+                                    <span class="uk-badge">highest</span>
+                                    {% endif %}
+                                </p>
+                            {% endfor %}
+
                         {% else %}
-                        <div class="correct">
-                            <p>Bet set</p>
-                        </div>
+                            <p class="price">No bids yet</p>
                         {% endif %}
+
+                            <div class="filter_button">
+                                <a class="uk-button uk-button-danger" href="#modal" uk-toggle>Remove</a>
+                                <div id="modal" uk-modal>
+                                    <div class="uk-modal-dialog uk-modal-body">
+                                        <button class="uk-modal-close-default" type="button" uk-close></button>
+                                        <h2 class="uk-modal-title">
+                                            Are you sure you want to delete the lot?
+                                        </h2>
+                                        <p>
+                                            If you delete a lot, all bets on it will be lost. Bidders will be angry
+                                        </p>
+                                        <p class="uk-text-right">
+                                            <button
+                                                    class="uk-button uk-button-default uk-modal-close"
+                                                    type="button"
+                                            >
+                                                Cancel
+                                            </button>
+                                            <a href="/lots/lot/{{ lot.id }}?action=remove">
+                                                <button
+                                                        class="uk-button uk-button-danger"
+                                                        type="button"
+                                                >
+                                                    Remove
+                                                </button>
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
                     {% endif %}
-                </form>
+                {% endif %}
             </article>
         </div>
     </div>

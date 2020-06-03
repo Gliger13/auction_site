@@ -61,5 +61,6 @@ class LotsFilter:
                     'text_description',
                     'heading',
                     'tags',
+                    'img_tags__tag_name',
                 ),
             ).filter(search=search_text)
