@@ -19,7 +19,7 @@
     padding: 5%;
 }
 
-.card {
+.card_blank {
     background-color: #FBFBF2;
 }
 
@@ -57,6 +57,7 @@ body {
 .footer{
     background: #282828;
     flex: 0 0 auto;
+    padding-top: 10px;
 }
 
 .uk-table{
@@ -67,8 +68,8 @@ body {
 
 .footer_row{
     width: 50%;
-    padding-top: 0px;
-    padding-bottom: 0px;
+    padding-top: 15px;
+    padding-bottom: 10px;
 }
 
 .footer_content{
@@ -93,7 +94,12 @@ body {
     color: rgb(230, 230, 230);
 }
 
-
-
-
+.card_wrapper {
+   background: #FBFBF2;
+   margin-top: 2.5%;
+   margin-left: auto;
+   margin-right: auto;
+   margin-bottom: 2.5%;
+   width: 50%;
+}
 

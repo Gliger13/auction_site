@@ -67,3 +67,7 @@ h4 {
     font-size: 1.2em;
     color: rgb(50, 50, 50);
 }
+
+.uk-text-lead {
+    text-align: ustify;
+}
